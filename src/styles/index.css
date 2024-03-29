@@ -73,4 +73,11 @@
   body {
     @apply bg-background text-foreground;
   }
+  .layout-container {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+  }
 }
