@@ -58,7 +58,7 @@ const Register = () => {
               </label>
             </div>
             <div className="flex flex-col py-4">
-              <ButtonSubmit button_value="Sign Up" />
+              <ButtonSubmit button_value="Sign Up" button_icon="" />
             </div>
           </form>
         </Form>

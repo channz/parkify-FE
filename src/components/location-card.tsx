@@ -14,26 +14,24 @@ const LocationCard = (props: Props) => {
   const { location_name, cover_image, city, space, id } = props;
 
   return (
-    <Link to={`/${id}`}>
-      <Card>
-        <CardContent>
-          <div className="flex">
-            <div className="flex flex-col">
-              <h2>{location_name}</h2>
-              <p>{city}</p>
-              <Badge>{space}</Badge>
-            </div>
-            <div className="flex flex-col">
-              <img
-                className="aspect-[1/2] h-auto w-auto object-cover"
-                src={cover_image}
-                alt={location_name}
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </Link>
+    // <Link to={`${id}`}>
+    <Card>
+      <CardContent className="flex p-4">
+        <div className="flex flex-col w-3/5">
+          <h2 className="font-semibold text-lg">{location_name}</h2>
+          <p className="font-light text-sm">{city}</p>
+          <Badge className="w-fit mt-auto bg-green-300">{space}</Badge>
+        </div>
+        <div className="flex w-2/5">
+          <img
+            className="h-24 w-auto object-cover rounded-2xl"
+            src={cover_image}
+            alt={location_name}
+          />
+        </div>
+      </CardContent>
+    </Card>
+    // </Link>
   );
 };
 
