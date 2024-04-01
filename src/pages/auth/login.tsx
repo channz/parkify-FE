@@ -50,7 +50,7 @@ const Login = () => {
               </label>
             </div>
             <div className="flex flex-col py-4">
-              <ButtonSubmit button_value="Login" />
+              <ButtonSubmit button_value="Login" button_icon="" />
             </div>
           </form>
         </Form>
