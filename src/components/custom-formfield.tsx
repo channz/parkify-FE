@@ -14,6 +14,8 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Label } from "./ui/label";
 
 interface Props<T extends FieldValues> {
   name: FieldPath<T>;
@@ -46,6 +48,32 @@ export function CustomFormField<T extends FieldValues>(
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>{children(field)}</FormControl>
+          {description && <FormDescription>{description}</FormDescription>}
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+}
+
+export function CustomFormRadio<T extends FieldValues>(
+  props: Readonly<Props<T>>
+) {
+  const { name, description, control, options } = props;
+
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <RadioGroup onValueChange={field.onChange} defaultValue={field.value}>
+            {options?.map((option) => (
+              <RadioGroupItem value={option.label} key={option.value}>
+                <Label htmlFor={option.label}>{option.label}</Label>
+              </RadioGroupItem>
+            ))}
+          </RadioGroup>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>

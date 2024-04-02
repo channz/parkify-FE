@@ -5,10 +5,54 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { getProfile, updateProfile } from "@/utils/apis/user/api";
+import { User } from "@/utils/apis/user/type";
+import { FormEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const EditProfile = () => {
+  const navigate = useNavigate();
   const form = useForm();
+
+  const [data, setData] = useState<User>();
+  const [fullname, setFullname] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    try {
+      const { data } = await getProfile();
+
+      setData(data);
+      setFullname(data.fullname);
+      setPassword(data.password);
+    } catch (error) {
+      toast((error as Error).message);
+    }
+  }
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const body = {
+      fullname,
+      password,
+    };
+
+    try {
+      const result = await updateProfile(body);
+
+      toast(result.message);
+      navigate("/profile");
+    } catch (error) {
+      toast((error as Error).message);
+    }
+  }
 
   return (
     <Layout>
@@ -19,7 +63,10 @@ const EditProfile = () => {
               <p className="text-white font-semibold text-3xl">Edit Profile</p>
               <Card className="flex flex-col rounded-3xl drop-shadow-md">
                 <CardContent className="p-4 space-y-5">
-                  <form className="flex flex-col space-y-4 px-4 py-4 my-4">
+                  <form
+                    className="flex flex-col space-y-4 px-4 py-4 my-4"
+                    onSubmit={onSubmit}
+                  >
                     <CustomFormField
                       control={form.control}
                       name=""
@@ -28,18 +75,6 @@ const EditProfile = () => {
                       {(field) => (
                         <Input
                           placeholder="Enter your full name"
-                          value={field.value as string}
-                        />
-                      )}
-                    </CustomFormField>
-                    <CustomFormField
-                      control={form.control}
-                      name=""
-                      label="Email"
-                    >
-                      {(field) => (
-                        <Input
-                          placeholder="Enter your email"
                           value={field.value as string}
                         />
                       )}
@@ -73,7 +108,11 @@ const EditProfile = () => {
           <div className="absolute bottom-0 p-4 w-full">
             <div className="flex flex-col gap-5 w-full">
               <div className="flex flex-col">
-                <ButtonSubmit button_value="Save Changes" button_icon="" />
+                <ButtonSubmit
+                  button_value="Save Changes"
+                  button_icon=""
+                  type="submit"
+                />
               </div>
             </div>
           </div>

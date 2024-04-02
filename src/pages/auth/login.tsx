@@ -4,10 +4,38 @@ import Layout from "@/components/layout";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { loginUser } from "@/utils/apis/user/api";
+import { LoginSchema, loginSchema } from "@/utils/apis/user/type";
+import { useToken } from "@/utils/contexts/token";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Login = () => {
-  const form = useForm();
+  const { changeToken } = useToken();
+  const navigate = useNavigate();
+
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  async function onSubmit(data: LoginSchema) {
+    try {
+      const result = await loginUser(data);
+
+      changeToken(result.data.token);
+
+      toast(result.message);
+      navigate("/");
+    } catch (error) {
+      toast((error as Error).message.toString());
+    }
+  }
 
   return (
     <Layout>
@@ -23,19 +51,35 @@ const Login = () => {
           Sign in now
         </h1>
         <Form {...form}>
-          <form className="flex flex-col space-y-4 px-4 py-4 my-4">
-            <CustomFormField control={form.control} name="" label="Email">
+          <form
+            className="flex flex-col space-y-4 px-4 py-4 my-4"
+            action=""
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <CustomFormField control={form.control} name="email" label="Email">
               {(field) => (
                 <Input
+                  {...field}
+                  type="email"
                   placeholder="Enter your email"
+                  disabled={form.formState.isSubmitting}
+                  aria-disabled={form.formState.isSubmitting}
                   value={field.value as string}
                 />
               )}
             </CustomFormField>
-            <CustomFormField control={form.control} name="" label="Password">
+            <CustomFormField
+              control={form.control}
+              name="password"
+              label="Password"
+            >
               {(field) => (
                 <Input
+                  {...field}
+                  type="password"
                   placeholder="Set a 4 character password"
+                  disabled={form.formState.isSubmitting}
+                  aria-disabled={form.formState.isSubmitting}
                   value={field.value as string}
                 />
               )}
@@ -50,7 +94,7 @@ const Login = () => {
               </label>
             </div>
             <div className="flex flex-col py-4">
-              <ButtonSubmit button_value="Login" button_icon="" />
+              <ButtonSubmit button_value="Login" button_icon="" type="submit" />
             </div>
           </form>
         </Form>

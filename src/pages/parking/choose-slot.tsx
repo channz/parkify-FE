@@ -58,6 +58,26 @@ const ChooseSlot = () => {
             </SelectTrigger>
             <SelectContent className="flex">
               <SelectItem className="flex" value="1">
+                1<span className=""> Floor</span>
+                <span className="">
+                  <Badge className="ms-4">Available</Badge>
+                </span>
+              </SelectItem>
+              <SelectItem className="flex" value="2">
+                2<span className=""> Floor</span>
+                <span className="">
+                  <Badge className="ms-4">Not Available</Badge>
+                </span>
+              </SelectItem>
+            </SelectContent>
+          </Select>
+          <p className="font-semibold text-md">Choose Slot</p>
+          <Select>
+            <SelectTrigger className="p-4 h-12 rounded-2xl">
+              <SelectValue placeholder="Choose Slot" />
+            </SelectTrigger>
+            <SelectContent className="flex">
+              <SelectItem className="flex" value="1">
                 1
                 <span className="">
                   <Badge className="ms-4">Available</Badge>
@@ -66,7 +86,7 @@ const ChooseSlot = () => {
               <SelectItem className="flex" value="2">
                 2
                 <span className="">
-                  <Badge className="ms-4">Not Available</Badge>
+                  <Badge className="ms-4">Available</Badge>
                 </span>
               </SelectItem>
             </SelectContent>
@@ -76,13 +96,14 @@ const ChooseSlot = () => {
           <Card className="flex flex-col w-1/2 rounded-2xl border-orange-400">
             <CardContent className="py-2">
               <p className="font-light text-md leading-none">Picking</p>
-              <p className="font-semibold text-lg">1st Floor</p>
+              <p className="font-semibold text-lg">1st Floor | 1</p>
             </CardContent>
           </Card>
           <div className="flex flex-col w-1/2 leading-none">
             <ButtonSubmit
               button_value="Book Now"
               button_icon={<ArrowUpRight />}
+              type=""
             />
           </div>
         </div>

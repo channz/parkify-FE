@@ -1,5 +1,6 @@
 import Layout from "@/components/layout";
 import { Card, CardContent } from "@/components/ui/card";
+import { useToken } from "@/utils/contexts/token";
 import {
   LogOut,
   MapPinned,
@@ -9,8 +10,16 @@ import {
   Receipt,
   Settings2,
 } from "lucide-react";
+import { toast } from "sonner";
 
 const Homepage = () => {
+  const { changeToken } = useToken();
+
+  function handleLogout() {
+    changeToken();
+    toast("Logout successfully");
+  }
+
   return (
     <Layout>
       <div className="h-2/5 bg-gradient-to-b from-orange-400 to-yellow-400">
@@ -22,7 +31,10 @@ const Homepage = () => {
             </div>
             <div className="flex gap-5 text-white">
               <Settings2 className="w-7 h-7" />
-              <LogOut className="w-7 h-7" />
+              <LogOut
+                className="w-7 h-7 cursor-pointer"
+                onClick={() => handleLogout()}
+              />
             </div>
           </div>
           {/* User Dashboard */}
