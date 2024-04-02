@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { LogOut, Settings, SquarePen, Trash2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 const EditProfile = () => {
