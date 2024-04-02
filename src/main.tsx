@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./pages/profile/edit-profile";
+import App from "./routes/";
+import { TokenProvider } from "./utils/contexts/token";
 import "./styles/index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+  <TokenProvider>
     <App />
-  </React.StrictMode>
+  </TokenProvider>
 );

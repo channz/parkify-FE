@@ -2,6 +2,7 @@ import ButtonSubmit from "@/components/button-submit";
 import Layout from "@/components/layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import QRCode from "react-qr-code";
 
 const EntryQR = () => {
   return (
@@ -11,7 +12,12 @@ const EntryQR = () => {
           <p className="font-semibold text-3xl text-white">Your Entry QR</p>
           <Card className="flex rounded-3xl">
             <CardContent className="px-4 py-5 m-auto space-y-4">
-              <img src="/public/qr-code.png" alt="entry-qr" />
+            <QRCode
+                    size={256}
+                    style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                    value={"1234567890"}
+                    viewBox={`0 0 256 256`}
+                />
               <p className="text-center font-light text-lg">
                 Booking ID : <span>1234567890</span>
               </p>

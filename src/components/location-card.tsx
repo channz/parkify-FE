@@ -1,6 +1,5 @@
 import { Badge } from "./ui/badge";
 import { Card, CardContent } from "./ui/card";
-import { Link } from "react-router-dom";
 
 interface Props {
   location_name: string;
@@ -11,10 +10,10 @@ interface Props {
 }
 
 const LocationCard = (props: Props) => {
-  const { location_name, cover_image, city, space, id } = props;
+  const { location_name, cover_image, city, space } = props;
 
   return (
-    // <Link to={`${id}`}>
+
     <Card>
       <CardContent className="flex p-4">
         <div className="flex flex-col w-3/5">
@@ -31,7 +30,7 @@ const LocationCard = (props: Props) => {
         </div>
       </CardContent>
     </Card>
-    // </Link>
+    
   );
 };
 
