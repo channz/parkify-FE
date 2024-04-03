@@ -1,51 +1,41 @@
-import ButtonSubmit from "@/components/button-submit";
 import { CustomFormField } from "@/components/custom-formfield";
 import Layout from "@/components/layout";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { getProfile, updateProfile } from "@/utils/apis/user/api";
-import { User } from "@/utils/apis/user/type";
-import { FormEvent, useEffect, useState } from "react";
+import { updateProfile } from "@/utils/apis/user/api";
+import { ProfileUpdateType, profileUpdateSchema } from "@/utils/apis/user/type";
+import { useToken } from "@/utils/contexts/token";
+import useStore from "@/utils/stores/store";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const EditProfile = () => {
   const navigate = useNavigate();
-  const form = useForm();
+  const { user } = useToken();
+  const { showPassword, toggleShowPassword } = useStore();
 
-  const [data, setData] = useState<User>();
-  const [fullname, setFullname] = useState("");
-  const [password, setPassword] = useState("");
+  const form = useForm<ProfileUpdateType>({
+    resolver: zodResolver(profileUpdateSchema),
+    defaultValues: {
+      fullname: "",
+      password: "",
+    },
+  });
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    form.setValue("fullname", user?.fullname!);
+    form.setValue("password", user?.password!);
+  }, [user]);
 
-  async function fetchData() {
+  async function onSubmit(data: ProfileUpdateType) {
     try {
-      const { data } = await getProfile();
-
-      setData(data);
-      setFullname(data.fullname);
-      setPassword(data.password);
-    } catch (error) {
-      toast((error as Error).message);
-    }
-  }
-
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const body = {
-      fullname,
-      password,
-    };
-
-    try {
-      const result = await updateProfile(body);
+      const result = await updateProfile(data);
 
       toast(result.message);
       navigate("/profile");
@@ -56,68 +46,74 @@ const EditProfile = () => {
 
   return (
     <Layout>
-      <div className="relative h-full w-full">
-        <Form {...form}>
-          <div className="h-2/5 bg-gradient-to-b from-orange-400 to-yellow-400">
+      <Form {...form}>
+        <div className="h-2/5 bg-gradient-to-b from-orange-400 to-yellow-400">
+          <form
+            className="flex flex-col"
+            onSubmit={form.handleSubmit(onSubmit)}
+            key="updateProfile"
+          >
             <div className="flex flex-col px-4 py-32 space-y-5">
               <p className="text-white font-semibold text-3xl">Edit Profile</p>
               <Card className="flex flex-col rounded-3xl drop-shadow-md">
-                <CardContent className="p-4 space-y-5">
-                  <form
-                    className="flex flex-col space-y-4 px-4 py-4 my-4"
-                    onSubmit={onSubmit}
+                <CardContent className="px-4 py-8 space-y-5">
+                  <CustomFormField
+                    control={form.control}
+                    name="fullname"
+                    label="Full Name"
                   >
-                    <CustomFormField
-                      control={form.control}
-                      name=""
-                      label="Full Name"
+                    {(field) => (
+                      <Input
+                        {...field}
+                        placeholder="Enter your full name"
+                        disabled={form.formState.isSubmitting}
+                        aria-disabled={form.formState.isSubmitting}
+                        value={field.value as string}
+                      />
+                    )}
+                  </CustomFormField>
+                  <CustomFormField
+                    control={form.control}
+                    name="password"
+                    label="Password"
+                  >
+                    {(field) => (
+                      <Input
+                        {...field}
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Set an 8 character password"
+                        disabled={form.formState.isSubmitting}
+                        aria-disabled={form.formState.isSubmitting}
+                        value={field.value as string}
+                      />
+                    )}
+                  </CustomFormField>
+                  <div className="flex space-x-2 ">
+                    <Checkbox
+                      className="flex"
+                      id="terms"
+                      onClick={toggleShowPassword}
+                    />
+                    <label
+                      htmlFor="terms"
+                      className="flex text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
-                      {(field) => (
-                        <Input
-                          placeholder="Enter your full name"
-                          value={field.value as string}
-                        />
-                      )}
-                    </CustomFormField>
-                    <CustomFormField
-                      control={form.control}
-                      name=""
-                      label="Password"
-                    >
-                      {(field) => (
-                        <Input
-                          placeholder="Set a 4 character password"
-                          value={field.value as string}
-                        />
-                      )}
-                    </CustomFormField>
-                    <div className="flex space-x-2">
-                      <Checkbox id="terms" />
-                      <label
-                        htmlFor="terms"
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                      >
-                        Show password
-                      </label>
-                    </div>
-                  </form>
+                      Show password
+                    </label>
+                  </div>
+                  <Button
+                    className="flex w-full h-full bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl font-bold text-lg"
+                    type="submit"
+                    id="updateProfile"
+                  >
+                    Save Changes
+                  </Button>
                 </CardContent>
               </Card>
             </div>
-          </div>
-          <div className="absolute bottom-0 p-4 w-full">
-            <div className="flex flex-col gap-5 w-full">
-              <div className="flex flex-col">
-                <ButtonSubmit
-                  button_value="Save Changes"
-                  button_icon=""
-                  type="submit"
-                />
-              </div>
-            </div>
-          </div>
-        </Form>
-      </div>
+          </form>
+        </div>
+      </Form>
     </Layout>
   );
 };

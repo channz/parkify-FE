@@ -15,6 +15,7 @@ const Onboarding = () => {
           <ButtonSubmit
             button_value="Explore Now"
             button_icon={<ChevronRight />}
+            type=""
           />
         </div>
       </div>

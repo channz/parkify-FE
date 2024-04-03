@@ -29,21 +29,18 @@ export const getProfile = async () => {
   }
 };
 
-export const updateProfile = async (
-  userID: string,
-  body: ProfileUpdateType
-) => {
+export const updateProfile = async (body: ProfileUpdateType) => {
   try {
-    const response = await axiosWithConfig.put(`/users/${userID}`, body);
+    const response = await axiosWithConfig.put(`/users`, body);
     return response.data as ApiResponse;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
 };
 
-export const deleteUser = async (userID: string) => {
+export const deleteUser = async () => {
   try {
-    const response = await axiosWithConfig.delete(`/users/${userID}`);
+    const response = await axiosWithConfig.delete(`/users`);
     return response.data as ApiResponse;
   } catch (error: any) {
     throw Error(error.response.data.message);

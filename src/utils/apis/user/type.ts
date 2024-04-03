@@ -15,15 +15,15 @@ export const registerSchema = z.object({
     .min(1, { message: "Email is required" })
     .email("Not a valid email"),
   password: z.string().min(8, { message: "Password is required" }),
-  role: z.string().min(1, { message: "" }),
+  role: z.enum(["user", "operator"], {
+    required_error: "You need to select a role",
+  }),
 });
 
 export const profileUpdateSchema = z.object({
-  fullname: z.string().min(1, { message: "Name is required" }),
+  fullname: z.string().min(5, { message: "Name is required" }),
   password: z.string().optional(),
 });
-
-// export type RoleType = "user" | "operator";
 
 export interface User {
   fullname: string;

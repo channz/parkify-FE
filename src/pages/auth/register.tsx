@@ -2,7 +2,6 @@ import ButtonSubmit from "@/components/button-submit";
 import {
   CustomFormField,
   CustomFormRadio,
-  // CustomFormRadio,
 } from "@/components/custom-formfield";
 import Layout from "@/components/layout";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -14,9 +13,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerUser } from "@/utils/apis/user/api";
 import { toast } from "sonner";
+import useStore from "@/utils/stores/store";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { showPassword, toggleShowPassword } = useStore();
 
   const form = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
@@ -102,8 +103,8 @@ const Register = () => {
               {(field) => (
                 <Input
                   {...field}
-                  type="password"
-                  placeholder="Set a 4 character password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Set an 8 character password"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
                   value={field.value as string}
@@ -111,7 +112,7 @@ const Register = () => {
               )}
             </CustomFormField>
             <div className="flex space-x-2">
-              <Checkbox id="terms" />
+              <Checkbox id="terms" onClick={toggleShowPassword} />
               <label
                 htmlFor="terms"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
