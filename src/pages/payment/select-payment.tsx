@@ -67,7 +67,7 @@ const SelectPayment = () => {
               </CardContent>
             </Card>
             <div className="flex flex-col">
-              <ButtonSubmit button_value="Confirm" button_icon="" />
+              <ButtonSubmit button_value="Confirm" button_icon="" type="" />
             </div>
           </div>
         </div>

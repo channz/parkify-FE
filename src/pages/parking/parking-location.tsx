@@ -6,23 +6,26 @@ import { CustomFormField } from "@/components/custom-formfield";
 import { useForm } from "react-hook-form";
 
 const ParkingLocation = () => {
-
   const form = useForm({
     defaultValues: {
-      fullName:  "",
+      fullName: "",
       location: "",
     },
   });
 
-    return (
-      <Layout>
-        <div className="flex flex-col p-4 space-y-4 overflow-auto">
-            <h1 className="flex justify-center text-3xl font-semibold">
-              Add Parking Location
-            </h1>
+  return (
+    <Layout>
+      <div className="flex flex-col p-4 space-y-4 overflow-auto">
+        <h1 className="flex justify-center text-3xl font-semibold">
+          Add Parking Location
+        </h1>
         <Form {...form}>
           <form className="flex flex-col space-y-4 px-4 py-4 my-4">
-            <CustomFormField control={form.control} name="fullName" label="Full Name">
+            <CustomFormField
+              control={form.control}
+              name="fullName"
+              label="Full Name"
+            >
               {(field) => (
                 <Input
                   placeholder="Enter your full name"
@@ -30,7 +33,11 @@ const ParkingLocation = () => {
                 />
               )}
             </CustomFormField>
-            <CustomFormField control={form.control} name="location" label="Location">
+            <CustomFormField
+              control={form.control}
+              name="location"
+              label="Location"
+            >
               {(field) => (
                 <Input
                   placeholder="Your parking location"
@@ -38,17 +45,15 @@ const ParkingLocation = () => {
                 />
               )}
             </CustomFormField>
-            
-          
 
             <div className="flex flex-col">
-                  <ButtonSubmit button_value="Confirm" button_icon="" />
+              <ButtonSubmit button_value="Confirm" button_icon="" type="" />
             </div>
           </form>
         </Form>
-        </div>
-      </Layout>
+      </div>
+    </Layout>
   );
 };
-  
+
 export default ParkingLocation;

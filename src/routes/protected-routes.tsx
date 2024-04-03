@@ -21,12 +21,12 @@ const ProtectedRoutes = () => {
     if (token) return <Navigate to="/" />;
   }
 
-//   if (protectedByToken.includes(pathname)) {
-//     if (!token) {
-//       toast("You need to login first");
-//       return <Navigate to="/login" />;
-//     }
-//   }
+  if (protectedByToken.includes(pathname)) {
+    if (!token) {
+      toast("You need to login first");
+      return <Navigate to="/login" />;
+    }
+  }
 
   return <Outlet />;
 };

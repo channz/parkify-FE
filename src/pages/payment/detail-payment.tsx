@@ -9,7 +9,7 @@ const DetailPayment = () => {
     <Layout>
       <div className="h-2/5 bg-gradient-to-b from-orange-400 to-yellow-400">
         <div className="flex flex-col p-4 space-y-5 w-full">
-        <DetailCard2
+          <DetailCard2
             key={1}
             location_name={"Tunjungan Plaza"}
             cover_image={"/public/tunjungan-plaza.jpg"}
@@ -28,20 +28,22 @@ const DetailPayment = () => {
               <Separator />
               <div className="flex">
                 <div className="flex flex-col w-1/2">
-                  <p className="font-normal text-base">Payment Method: 
-                        <p className="font-medium text-base">Virtual Account</p>
+                  <p className="font-normal text-base">
+                    Payment Method:
+                    <p className="font-medium text-base">Virtual Account</p>
                   </p>
                 </div>
                 <div className="flex flex-col w-1/2">
-                  <p className="font-normal text-base">VA Number: 
-                        <p className="font-medium text-base">8806 08123456789</p>
+                  <p className="font-normal text-base">
+                    VA Number:
+                    <p className="font-medium text-base">8806 08123456789</p>
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
           <div className="flex w-full h-14">
-            <ButtonSubmit button_value="Payment" button_icon="" />
+            <ButtonSubmit button_value="Payment" button_icon="" type="" />
           </div>
         </div>
       </div>
