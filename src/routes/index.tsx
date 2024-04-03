@@ -9,6 +9,9 @@ import EditProfile from "@/pages/profile/edit-profile";
 import QRPage from "@/pages/qr";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ProtectedRoutes from "./protected-routes";
+import ParkingHistory from "@/pages/parking/parking-history";
+import ParkingLocation from "@/pages/parking/parking-location";
+import DetailPayment from "@/pages/payment/detail-payment";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +52,18 @@ const router = createBrowserRouter([
       {
         path: "/editprofile",
         element: <EditProfile />,
+      },
+      {
+        path: "/history",
+        element: <ParkingHistory />,
+      },
+      {
+        path: "/parking-location",
+        element: <ParkingLocation />,
+      },
+      {
+        path: "/detail-payment",
+        element: <DetailPayment />,
       },
     ],
   },

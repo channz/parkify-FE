@@ -4,6 +4,7 @@ import ButtonSubmit from "@/components/button-submit";
 import { Form } from "@/components/ui/form";
 import { CustomFormField } from "@/components/custom-formfield";
 import { useForm } from "react-hook-form";
+import ImageLocation from "@/components/upload-image-loccation";
 
 const ParkingLocation = () => {
 
@@ -25,7 +26,7 @@ const ParkingLocation = () => {
             <CustomFormField control={form.control} name="fullName" label="Full Name">
               {(field) => (
                 <Input
-                  placeholder="Enter your full name"
+                  placeholder="Enter your fullname"
                   value={field.value as string}
                 />
               )}
@@ -38,9 +39,10 @@ const ParkingLocation = () => {
                 />
               )}
             </CustomFormField>
-            
-          
 
+            <ImageLocation
+              image={"/image.png"}
+            />
             <div className="flex flex-col">
                   <ButtonSubmit button_value="Confirm" button_icon="" />
             </div>

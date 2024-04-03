@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import QRCode from "react-qr-code";
 
-const EntryQR = () => {
+const QRPage = () => {
   return (
     <Layout>
       <div className="h-2/5 bg-gradient-to-b from-orange-400 to-yellow-400">
@@ -57,4 +57,4 @@ const EntryQR = () => {
   );
 };
 
-export default EntryQR;
+export default QRPage;
