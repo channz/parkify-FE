@@ -29,7 +29,7 @@ const ParkingLocation = () => {
             >
               {(field) => (
                 <Input
-                  placeholder="Enter your fullname"
+                  placeholder="Location Name"
                   value={field.value as string}
                 />
               )}
