@@ -12,6 +12,7 @@ import ProtectedRoutes from "./protected-routes";
 import ParkingHistory from "@/pages/parking/parking-history";
 import ParkingLocation from "@/pages/parking/parking-location";
 import DetailPayment from "@/pages/payment/detail-payment";
+import ParkingSlot from "@/pages/parking/parking-slot";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
         element: <SelectLocation />,
       },
       {
-        path: "/chooseslot",
+        path: "/choose-slot",
         element: <ChooseSlot />,
       },
       {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "/detail-payment",
         element: <DetailPayment />,
+      },
+      {
+        path: "/parking-slot",
+        element: <ParkingSlot/>,
       },
     ],
   },
