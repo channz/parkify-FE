@@ -12,7 +12,7 @@ const SelectLocation = () => {
           id={1}
           location_name={"Tunjungan Plaza"}
           city={"Surabaya"}
-          cover_image={"/public/tunjungan-plaza.jpg"}
+          cover_image={"/tunjungan-plaza.jpg"}
           space={"Available"}
         />
       </div>

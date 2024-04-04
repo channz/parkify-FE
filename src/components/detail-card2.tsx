@@ -11,10 +11,10 @@ const DetailCard2 = (props: Props) => {
   const { location_name, city, floor, cover_image } = props;
 
   return (
-    <Card>
-      <CardContent>
+    <Card className="rounded-3xl">
+      <CardContent className="flex p-5">
         <div className="flex">
-          <div className="flex flex-col">
+          <div className="flex flex-col w-3/5">
             <div className="flex flex-col">
               <h2>{location_name}</h2>
               <p>{city}</p>
@@ -23,8 +23,11 @@ const DetailCard2 = (props: Props) => {
               <p>{floor}</p>
             </div>
           </div>
-          <div className="flex flex-col">
-            <img src={cover_image} alt={location_name} />
+          <div className="flex w-2/5">
+            <img 
+            className="h-full w-auto object-cover rounded-2xl"
+            src={cover_image} 
+            alt={location_name} />
           </div>
         </div>
       </CardContent>
