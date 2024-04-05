@@ -51,8 +51,7 @@ export interface Parking {
   location: string;
   city: string;
   imageloc: string;
-  slot: ParkingSlot[];
-  space: Pick<ParkingSlot, "status">;
+  slot?: ParkingSlot[];
 }
 
 export const parkingSchema = z.discriminatedUnion("mode", [

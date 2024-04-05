@@ -5,27 +5,42 @@ import Layout from "@/components/layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
+import { getReservationByID } from "@/utils/apis/reservation/api";
+import { Reservation } from "@/utils/apis/reservation/type";
 import { addTransaction } from "@/utils/apis/transaction/api";
 import {
   TransactionSchema,
   transactionSchema,
 } from "@/utils/apis/transaction/type";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const SelectPayment = () => {
   const navigate = useNavigate();
+  const [data, setData] = useState<Reservation>();
+  const params = useParams();
 
   const form = useForm<TransactionSchema>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
       reservation_id: 0,
-      price: 0,
       payment: "",
     },
   });
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    try {
+      const result = await getReservationByID(params.reservationID!);
+      setData(result.data);
+    } catch (error) {}
+  }
 
   async function onSubmit(data: TransactionSchema) {
     try {
@@ -61,9 +76,8 @@ const SelectPayment = () => {
             </Card>
           </div>
           <DetailCard
-            key={1}
             location_name={"Tunjungan Plaza"}
-            cover_image={"/public/tunjungan-plaza.jpg"}
+            cover_image={"/tunjungan-plaza.jpg"}
             city={"Surabaya"}
           />
           <Separator />

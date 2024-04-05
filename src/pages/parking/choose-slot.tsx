@@ -13,8 +13,6 @@ import {
 } from "@/components/ui/select";
 import { getParkingByID } from "@/utils/apis/parking/api";
 import { Parking } from "@/utils/apis/parking/type";
-import { getAllParkingSlot } from "@/utils/apis/slot/api";
-import { ParkingSlot } from "@/utils/apis/slot/type";
 import { ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -24,11 +22,9 @@ const ChooseSlot = () => {
   const params = useParams();
 
   const [data, setData] = useState<Parking>();
-  const [datas, setDatas] = useState<ParkingSlot[]>([]);
 
   useEffect(() => {
     fetchData();
-    fetchDataSlot();
   }, []);
 
   async function fetchData() {
@@ -36,15 +32,6 @@ const ChooseSlot = () => {
       const result = await getParkingByID(params.parkingID!);
 
       setData(result.data);
-    } catch (error) {
-      toast((error as Error).message.toString());
-    }
-  }
-
-  async function fetchDataSlot() {
-    try {
-      const result = await getAllParkingSlot();
-      setDatas(result.data);
     } catch (error) {
       toast((error as Error).message.toString());
     }
