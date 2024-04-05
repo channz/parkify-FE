@@ -44,12 +44,20 @@ const router = createBrowserRouter([
         element: <ParkingLocation />,
       },
       {
-        path: "/qrpage",
+        path: "/reservations",
+        element: <ParkingHistory />,
+      },
+      {
+        path: "/reservations/:reservationID",
         element: <QRPage />,
       },
       {
-        path: "/payment",
+        path: "/reservations/:reservationID/checkout",
         element: <SelectPayment />,
+      },
+      {
+        path: "/reservations/:reservationID/summary",
+        element: <DetailPayment />,
       },
       {
         path: "/profile",
@@ -60,16 +68,8 @@ const router = createBrowserRouter([
         element: <EditProfile />,
       },
       {
-        path: "/history",
-        element: <ParkingHistory />,
-      },
-      {
         path: "/parking-location",
         element: <ParkingLocation />,
-      },
-      {
-        path: "/detail-payment",
-        element: <DetailPayment />,
       },
       {
         path: "/parking-slot",

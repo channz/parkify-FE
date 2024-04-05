@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const SelectLocation = () => {
-  const [data, setData] = useState<Parking[]>();
+  const [data, setData] = useState<Parking[]>([]);
 
   useEffect(() => {
     fetchData();
@@ -26,13 +26,12 @@ const SelectLocation = () => {
     <Layout>
       <div className="flex flex-col p-4 space-y-4 overflow-auto">
         <Input placeholder="Find parking place" type="search" />
-        {data?.map((parking) => (
+        {data.map((parking) => (
           <LocationCard
             key={parking.location}
             location_name={parking.location}
             city={parking.city}
             cover_image={"/tunjungan-plaza.jpg"}
-            space={parking.space}
           />
         ))}
       </div>

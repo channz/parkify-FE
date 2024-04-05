@@ -6,11 +6,10 @@ interface Props {
   location_name: string;
   cover_image: string;
   city: string;
-  space: any;
 }
 
 const LocationCard = (props: Props) => {
-  const { location_name, cover_image, city, space } = props;
+  const { location_name, cover_image, city } = props;
 
   return (
     <Link to={`/chooseslot/${location_name}`}>
@@ -19,7 +18,6 @@ const LocationCard = (props: Props) => {
           <div className="flex flex-col w-3/5">
             <h2 className="font-semibold text-lg">{location_name}</h2>
             <p className="font-light text-sm">{city}</p>
-            <Badge className="w-fit mt-auto bg-green-300">{space}</Badge>
           </div>
           <div className="flex w-2/5">
             <img
