@@ -1,20 +1,40 @@
 import Layout from "@/components/layout";
 import LocationCard from "@/components/location-card";
 import { Input } from "@/components/ui/input";
+import { getAllParking } from "@/utils/apis/parking/api";
+import { Parking } from "@/utils/apis/parking/type";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const SelectLocation = () => {
+  const [data, setData] = useState<Parking[]>();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    try {
+      const result = await getAllParking();
+      setData(result.data);
+    } catch (error) {
+      toast((error as Error).message.toString());
+    }
+  }
+
   return (
     <Layout>
       <div className="flex flex-col p-4 space-y-4 overflow-auto">
         <Input placeholder="Find parking place" type="search" />
-        <LocationCard
-          key={1}
-          id={1}
-          location_name={"Tunjungan Plaza"}
-          city={"Surabaya"}
-          cover_image={"/tunjungan-plaza.jpg"}
-          space={"Available"}
-        />
+        {data?.map((parking) => (
+          <LocationCard
+            key={parking.location}
+            location_name={parking.location}
+            city={parking.city}
+            cover_image={"/tunjungan-plaza.jpg"}
+            space={parking.space}
+          />
+        ))}
       </div>
     </Layout>
   );

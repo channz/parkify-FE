@@ -4,14 +4,17 @@ import { Form } from "@/components/ui/form";
 import { CustomFormField } from "@/components/custom-formfield";
 import { useForm } from "react-hook-form";
 import { ParkingSchema, parkingSchema } from "@/utils/apis/parking/type";
-import { addNewParking } from "@/utils/apis/parking/api";
+import { addNewParking, editParking } from "@/utils/apis/parking/api";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
+import { useToken } from "@/utils/contexts/token";
 
-const ParkingLocation = () => {
+const EditParkingLocation = () => {
   const navigate = useNavigate();
+  const { user } = useToken();
 
   const form = useForm<ParkingSchema>({
     resolver: zodResolver(parkingSchema),
@@ -22,10 +25,13 @@ const ParkingLocation = () => {
     },
   });
 
-  async function onSubmit(body: ParkingSchema) {
+  useEffect(() => {
+    form.setValue("location");
+  }, []);
+
+  async function onSubmit(body: ParkingSchema, parkingID: string) {
     try {
-      console.log("tes");
-      const result = await addNewParking(body);
+      const result = await editParking(body: {mode: "edit"}, parkingID);
 
       toast(result.message);
       navigate(`/`);
@@ -44,7 +50,7 @@ const ParkingLocation = () => {
           <form
             className="flex flex-col space-y-4 px-4 py-4 my-4"
             action=""
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(onSubmit(body))}
           >
             <CustomFormField
               control={form.control}
@@ -96,4 +102,4 @@ const ParkingLocation = () => {
   );
 };
 
-export default ParkingLocation;
+export default EditParkingLocation;

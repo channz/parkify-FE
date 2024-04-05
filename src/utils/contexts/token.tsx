@@ -14,7 +14,7 @@ import { getProfile } from "../apis/user/api";
 
 interface Context {
   token: string;
-  user: User | undefined;
+  user: Partial<User>;
   changeToken: (token?: string) => void;
 }
 
@@ -24,7 +24,7 @@ interface Props {
 
 const initialValue = {
   token: "",
-  user: undefined,
+  user: {},
   changeToken: () => {},
 };
 
@@ -32,7 +32,7 @@ const TokenContext = createContext<Context>(initialValue);
 
 export const TokenProvider = ({ children }: Props) => {
   const [token, setToken] = useState(localStorage.getItem("token") ?? "");
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<Partial<User>>({});
 
   useEffect(() => {
     setAxiosConfig(token);
@@ -68,7 +68,7 @@ export const TokenProvider = ({ children }: Props) => {
         localStorage.setItem("token", newToken);
       } else {
         localStorage.removeItem("token");
-        setUser(undefined);
+        setUser({});
       }
     },
     [token]

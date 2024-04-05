@@ -1,17 +1,43 @@
 import ButtonSubmit from "@/components/button-submit";
+import { CustomFormSelect } from "@/components/custom-formfield";
 import DetailCard from "@/components/detail-card";
 import Layout from "@/components/layout";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
+import { addTransaction } from "@/utils/apis/transaction/api";
+import {
+  TransactionSchema,
+  transactionSchema,
+} from "@/utils/apis/transaction/type";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const SelectPayment = () => {
+  const navigate = useNavigate();
+
+  const form = useForm<TransactionSchema>({
+    resolver: zodResolver(transactionSchema),
+    defaultValues: {
+      reservation_id: 0,
+      price: 0,
+      payment: "",
+    },
+  });
+
+  async function onSubmit(data: TransactionSchema) {
+    try {
+      const result = await addTransaction(data);
+
+      toast(result.message);
+      navigate(`/detail-payment`);
+    } catch (error) {
+      toast((error as Error).message.toString());
+    }
+  }
+
   return (
     <Layout>
       <div className="relative h-full w-full">
@@ -41,20 +67,16 @@ const SelectPayment = () => {
             city={"Surabaya"}
           />
           <Separator />
-          <p className="font-semibold text-base">Select Payment</p>
-          <Select>
-            <SelectTrigger className="p-4 h-12 rounded-2xl">
-              <SelectValue placeholder="Choose Payment Method" />
-            </SelectTrigger>
-            <SelectContent className="flex">
-              <SelectItem className="flex" value="Visa">
-                Visa
-              </SelectItem>
-              <SelectItem className="flex" value="Credit Card">
-                Credit Card
-              </SelectItem>
-            </SelectContent>
-          </Select>
+          <Form {...form}>
+            <form action="" onSubmit={form.handleSubmit(onSubmit)}>
+              <CustomFormSelect
+                control={form.control}
+                name="payment"
+                label="Select Payment"
+                options={[{ value: "va bca", label: "va bca" }]}
+              />
+            </form>
+          </Form>
         </div>
         <div className="absolute bottom-0 p-4 w-full">
           <div className="flex flex-col gap-5 w-full">
@@ -67,7 +89,11 @@ const SelectPayment = () => {
               </CardContent>
             </Card>
             <div className="flex flex-col">
-              <ButtonSubmit button_value="Confirm" button_icon="" type="" />
+              <ButtonSubmit
+                button_value="Confirm"
+                button_icon=""
+                type="submit"
+              />
             </div>
           </div>
         </div>
