@@ -25,10 +25,12 @@ export const profileUpdateSchema = z.object({
   password: z.string().optional(),
 });
 
+export type RoleType = "user" | "operator";
+
 export interface User {
   fullname: string;
   email: string;
-  role: string;
+  role: RoleType;
   password: string;
   token: string;
 }

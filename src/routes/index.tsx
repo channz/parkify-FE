@@ -13,6 +13,7 @@ import ParkingHistory from "@/pages/parking/parking-history";
 import ParkingLocation from "@/pages/parking/parking-location";
 import DetailPayment from "@/pages/payment/detail-payment";
 import ParkingSlot from "@/pages/parking/parking-slot";
+import ListParking from "@/pages/parking/list-parking";
 
 const router = createBrowserRouter([
   {
@@ -35,8 +36,12 @@ const router = createBrowserRouter([
         element: <SelectLocation />,
       },
       {
-        path: "/choose-slot",
+        path: "/choose-slot/:parkingID",
         element: <ChooseSlot />,
+      },
+      {
+        path: "/parking-location",
+        element: <ParkingLocation />,
       },
       {
         path: "/qrpage",
@@ -68,7 +73,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/parking-slot",
-        element: <ParkingSlot/>,
+        element: <ParkingSlot />,
+      },
+      {
+        path: "/list-parking",
+        element: <ListParking />,
       },
     ],
   },

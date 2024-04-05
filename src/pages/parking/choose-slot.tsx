@@ -11,18 +11,54 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getParkingByID } from "@/utils/apis/parking/api";
+import { Parking } from "@/utils/apis/parking/type";
+import { getAllParkingSlot } from "@/utils/apis/slot/api";
+import { ParkingSlot } from "@/utils/apis/slot/type";
 import { ArrowUpRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const ChooseSlot = () => {
+  const params = useParams();
+
+  const [data, setData] = useState<Parking>();
+  const [datas, setDatas] = useState<ParkingSlot[]>([]);
+
+  useEffect(() => {
+    fetchData();
+    fetchDataSlot();
+  }, []);
+
+  async function fetchData() {
+    try {
+      const result = await getParkingByID(params.parkingID!);
+
+      setData(result.data);
+    } catch (error) {
+      toast((error as Error).message.toString());
+    }
+  }
+
+  async function fetchDataSlot() {
+    try {
+      const result = await getAllParkingSlot();
+      setDatas(result.data);
+    } catch (error) {
+      toast((error as Error).message.toString());
+    }
+  }
+
   return (
     <Layout>
       <div className="relative h-full w-full">
         <div className="flex flex-col p-4 space-y-4">
           <DetailCard
-            key={1}
-            location_name={"Tunjungan Plaza"}
-            cover_image={"/public/tunjungan-plaza.jpg"}
-            city={"Surabaya"}
+            key={data?.location}
+            location_name={data?.location!}
+            cover_image={"/tunjungan-plaza.jpg"}
+            city={data?.city!}
           />
           <p className="font-semibold text-md">Select Vehicle</p>
           <div className="flex">

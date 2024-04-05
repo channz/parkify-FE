@@ -11,6 +11,6 @@ export interface ApiDataResponse<T = any> {
 
 export interface ApiDataArrayResponse<T = any> {
   code: number;
-  data: [T];
+  data: T[];
   message: string;
 }
