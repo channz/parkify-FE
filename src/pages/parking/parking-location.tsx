@@ -9,7 +9,7 @@ import ImageLocation from "@/components/upload-image-loccation";
 const ParkingLocation = () => {
   const form = useForm({
     defaultValues: {
-      fullName: "",
+      locationName: "",
       location: "",
     },
   });
@@ -24,12 +24,12 @@ const ParkingLocation = () => {
           <form className="flex flex-col space-y-4 px-4 py-4 my-4">
             <CustomFormField
               control={form.control}
-              name="fullName"
-              label="Full Name"
+              name="locationName"
+              label="Location Name"
             >
               {(field) => (
                 <Input
-                  placeholder="Enter your fullname"
+                  placeholder="Location Name"
                   value={field.value as string}
                 />
               )}
