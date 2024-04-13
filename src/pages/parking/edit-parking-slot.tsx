@@ -1,4 +1,5 @@
 import ButtonSubmit from "@/components/button-submit";
+import DetailCard from "@/components/detail-card";
 import Layout from "@/components/layout";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
@@ -10,18 +11,11 @@ import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { SlotSchema, slotSchema } from "@/utils/apis/slot/type";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addNewParkingSlot } from "@/utils/apis/slot/api";
+import { editParkingSlot } from "@/utils/apis/slot/api";
 import { toast } from "sonner";
-import DetailCard3 from "@/components/detail-card3";
-import { Parking } from "@/utils/apis/parking/type";
-import { useEffect, useState } from "react";
-import { getAllParking } from "@/utils/apis/parking/api";
-import { getProfile } from "@/utils/apis/user/api";
 
-const ParkingSlot = () => {
+const EditParkingSlot = () => {
   const navigate = useNavigate();
-
-  const [data, setData] = useState<Parking>();
 
   const form = useForm<SlotSchema>({
     resolver: zodResolver(slotSchema),
@@ -33,26 +27,9 @@ const ParkingSlot = () => {
     },
   });
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  async function fetchData() {
+  async function onSubmit(data: SlotSchema, parkingslotID: string) {
     try {
-      const userResponse = await getProfile();
-      const result = await getAllParking();
-      const filteredData = result.data.filter(
-        (parking) => parking.user_id == userResponse.data.user_id
-      );
-      setData(filteredData[0]);
-    } catch (error) {
-      toast((error as Error).message.toString());
-    }
-  }
-
-  async function onSubmit(data: SlotSchema) {
-    try {
-      const result = await addNewParkingSlot(data);
+      const result = await editParkingSlot(data, parkingslotID);
 
       toast(result.message);
       navigate("/profile");
@@ -65,12 +42,11 @@ const ParkingSlot = () => {
     <Layout>
       <div className="flex flex-col p-4 space-y-4 overflow-auto">
         <div className="flex flex-col p-4 space-y-4">
-          <DetailCard3
-            id={data?.ID}
-            key={data?.ID}
-            location_name={data?.location!}
-            cover_image={data?.imageloc}
-            city={data?.city!}
+          <DetailCard
+            key={1}
+            location_name={"Tunjungan Plaza"}
+            cover_image={"/public/tunjungan-plaza.jpg"}
+            city={"Surabaya"}
           />
           <h1 className="flex justify-normal text-3xl font-semibold">
             Add Parking Slot
@@ -78,7 +54,7 @@ const ParkingSlot = () => {
           <Form {...form}>
             <form
               className="flex flex-col space-y-4 py-4 my-4"
-              onSubmit={form.handleSubmit(onSubmit)}
+              onSubmit={form.handleSubmit(onSubmit(body, parkingslotID))}
             >
               <CustomFormSelect
                 control={form.control}
@@ -148,4 +124,4 @@ const ParkingSlot = () => {
   );
 };
 
-export default ParkingSlot;
+export default EditParkingSlot;

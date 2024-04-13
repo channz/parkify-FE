@@ -14,8 +14,6 @@ import {
 import { useForm } from "react-hook-form";
 
 const ListParking = () => {
-  const form = useForm();
-
   return (
     <Layout>
       <div className="flex flex-col p-4 space-y-4 overflow-auto">
@@ -43,38 +41,6 @@ const ListParking = () => {
               </SelectItem>
             </SelectContent>
           </Select>
-
-          <Form {...form}>
-            <form className="flex flex-col space-y-4 px-4 py-4 my-4">
-              <CustomFormField
-                control={form.control}
-                name="floorPark"
-                label="Floor"
-              >
-                {(field) => (
-                  <Input placeholder="Floor" value={field.value as string} />
-                )}
-              </CustomFormField>
-              <CustomFormField
-                control={form.control}
-                name="slotPark"
-                label="Slot"
-              >
-                {(field) => (
-                  <Input placeholder="Slot" value={field.value as string} />
-                )}
-              </CustomFormField>
-              <CustomFormField
-                control={form.control}
-                name="pricePark"
-                label="Price"
-              >
-                {(field) => (
-                  <Input placeholder="Price" value={field.value as string} />
-                )}
-              </CustomFormField>
-            </form>
-          </Form>
         </div>
         <div className="flex flex-col">
           <ButtonSubmit button_value="Submit" button_icon="" type="" />

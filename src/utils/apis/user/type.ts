@@ -33,6 +33,7 @@ export interface User {
   role: RoleType;
   password: string;
   token: string;
+  user_id: string;
 }
 
 export type ProfileUpdateType = z.infer<typeof profileUpdateSchema>;

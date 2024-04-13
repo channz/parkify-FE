@@ -79,11 +79,11 @@ export function CustomFormRadio<T extends FieldValues>(
             <RadioGroup
               onValueChange={field.onChange}
               defaultValue={field.value}
-              className="flex"
+              className="flex gap-8"
             >
               {options?.map((option) => (
                 <FormItem
-                  className="flex space-x-3 space-y-0 border-2 rounded-2xl px-5 py-8 w-full focus-within:border-orange-400"
+                  className="flex space-x-4 space-y-0 border-2 rounded-2xl px-4 py-6 w-full focus-within:border-orange-400"
                   key={option.value}
                 >
                   <FormControl>

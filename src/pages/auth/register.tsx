@@ -44,18 +44,18 @@ const Register = () => {
     <Layout>
       <div className="flex flex-col">
         <img
-          src="/public/logo-parkify.png"
+          src="/logo-parkify.png"
           alt="parkify"
-          width={320}
-          height={320}
+          width={180}
+          height={180}
           className="flex flex-col mx-auto"
         />
-        <h1 className="flex justify-center text-3xl font-semibold">
+        <h1 className="flex justify-center text-2xl font-semibold">
           Create an account
         </h1>
         <Form {...form}>
           <form
-            className="flex flex-col space-y-4 px-4 py-4 my-4"
+            className="flex flex-col space-y-2 px-8 py-2 my-2"
             action=""
             onSubmit={form.handleSubmit(onSubmit)}
           >
