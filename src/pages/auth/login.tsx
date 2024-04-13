@@ -45,16 +45,16 @@ const Login = () => {
         <img
           src="/logo-parkify.png"
           alt="parkify"
-          width={320}
-          height={320}
+          width={180}
+          height={180}
           className="flex flex-col mx-auto"
         />
-        <h1 className="flex justify-center text-3xl font-semibold">
+        <h1 className="flex justify-center my-8 text-2xl font-semibold">
           Sign in now
         </h1>
         <Form {...form}>
           <form
-            className="flex flex-col space-y-4 px-4 py-4 my-4"
+            className="flex flex-col space-y-2 px-8 py-4 my-8"
             action=""
             onSubmit={form.handleSubmit(onSubmit)}
           >

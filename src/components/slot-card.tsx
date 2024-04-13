@@ -7,6 +7,8 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { toast } from "sonner";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 interface Props {
   slot: number;
@@ -15,12 +17,15 @@ interface Props {
 
 const SlotCard = (props: Props) => {
   const { slot, price } = props;
+  const [first, setfirst] = useState();
 
-  async function handleDelete(parkingslotID: string) {
+  const params = useParams();
+
+  async function handleDelete() {
     try {
-      const result = await deleteParkingSlot(parkingslotID);
+      console.log("tes");
+      const result = await deleteParkingSlot(params.parkingslotID!);
       toast(result?.message);
-      localStorage.removeItem("token");
     } catch (error) {
       toast((error as Error).message);
     }
@@ -41,7 +46,9 @@ const SlotCard = (props: Props) => {
               <DropdownMenuTrigger>Open</DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem>Edit</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleDelete(parkingslotID)}>
+                <DropdownMenuItem
+                  onClick={() => handleDelete(params.parkingslotID!)}
+                >
                   Delete
                 </DropdownMenuItem>
               </DropdownMenuContent>

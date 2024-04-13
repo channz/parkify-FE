@@ -43,5 +43,7 @@ export const deleteParkingSlot = async (parkingslotID: string) => {
     );
 
     return response.data as ApiResponse;
-  } catch (error: any) {}
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
 };

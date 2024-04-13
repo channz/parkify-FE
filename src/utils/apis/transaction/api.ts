@@ -10,3 +10,12 @@ export const addTransaction = async (data: TransactionSchema) => {
     throw Error(error.response.data.message);
   }
 };
+
+export const getTransaction = async () => {
+  try {
+    const response = await axiosWithConfig.get(`/transaction`);
+    return response.data as ApiDataResponse<Transaction>;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};

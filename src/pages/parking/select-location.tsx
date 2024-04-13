@@ -28,10 +28,11 @@ const SelectLocation = () => {
         <Input placeholder="Find parking place" type="search" />
         {data.map((parking) => (
           <LocationCard
-            key={parking.location}
+            key={parking.ID}
+            id={parking.ID}
             location_name={parking.location}
             city={parking.city}
-            cover_image={"/tunjungan-plaza.jpg"}
+            cover_image={parking.imageloc}
           />
         ))}
       </div>

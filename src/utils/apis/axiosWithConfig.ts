@@ -8,9 +8,7 @@ export const setAxiosConfig = (token: string) => {
 };
 
 axiosWithConfig.interceptors.request.use((axiosConfig) => {
-  // axiosConfig.baseURL = "https://parkify.online";
-  axiosConfig.baseURL =
-    "https://virtserver.swaggerhub.com/RAICHUGO25/Parkify-Apps/1.0.0";
+  axiosConfig.baseURL = "https://parkify.online";
   if (bearerToken) {
     axiosConfig.headers.Authorization = `Bearer ${bearerToken}`;
   }

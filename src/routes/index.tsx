@@ -14,6 +14,8 @@ import ParkingLocation from "@/pages/parking/parking-location";
 import DetailPayment from "@/pages/payment/detail-payment";
 import ParkingSlot from "@/pages/parking/parking-slot";
 import ListParking from "@/pages/parking/list-parking";
+import EditParkingSlot from "@/pages/parking/edit-parking-slot";
+import EditParkingLocation from "@/pages/parking/edit-parking";
 
 const router = createBrowserRouter([
   {
@@ -68,12 +70,16 @@ const router = createBrowserRouter([
         element: <EditProfile />,
       },
       {
-        path: "/parking-location",
-        element: <ParkingLocation />,
+        path: "/parking-location/:parkingID/edit",
+        element: <EditParkingLocation />,
       },
       {
-        path: "/parking-slot",
+        path: "/parking-slot/:parkingID",
         element: <ParkingSlot />,
+      },
+      {
+        path: "/parking-slot/edit",
+        element: <EditParkingSlot />,
       },
       {
         path: "/list-parking",

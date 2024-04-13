@@ -26,8 +26,7 @@ const SelectPayment = () => {
   const form = useForm<TransactionSchema>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
-      reservation_id: 0,
-      payment: "",
+      payment_method: "",
     },
   });
 
@@ -85,9 +84,9 @@ const SelectPayment = () => {
             <form action="" onSubmit={form.handleSubmit(onSubmit)}>
               <CustomFormSelect
                 control={form.control}
-                name="payment"
+                name="payment_method"
                 label="Select Payment"
-                options={[{ value: "va bca", label: "va bca" }]}
+                options={[{ value: "VA BCA", label: "VA BCA" }]}
               />
             </form>
           </Form>
