@@ -3,8 +3,25 @@ import Layout from "@/components/layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import QRCode from "react-qr-code";
+import { getReservationByID } from "@/utils/apis/reservation/api";
+import { Reservation } from "@/utils/apis/reservation/type";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const QRPage = () => {
+  const params = useParams();
+  useEffect (() => {
+    fetchData();
+  }, []);
+  const [ data, setData ] = useState<Reservation>();
+
+  async  function fetchData() {
+    try{
+      const result = await getReservationByID(params.reservationID!);
+      console.log(result);
+      setData(result.data);
+    } catch(error) {}
+  }
   return (
     <Layout>
       <div className="h-2/5 bg-gradient-to-b from-orange-400 to-yellow-400">
