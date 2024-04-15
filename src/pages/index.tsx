@@ -1,5 +1,7 @@
 import Layout from "@/components/layout";
 import { Card, CardContent } from "@/components/ui/card";
+import { getAllParkingSlot } from "@/utils/apis/slot/api";
+import { ParkingSlot } from "@/utils/apis/slot/type";
 import { useToken } from "@/utils/contexts/token";
 import {
   LogOut,
@@ -10,11 +12,26 @@ import {
   Receipt,
   Settings2,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 const Homepage = () => {
   const { changeToken, user } = useToken();
+  const [data, setData] = useState<ParkingSlot[]>([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    try {
+      const result = await getAllParkingSlot();
+      setData(result.data.filter((slot) => slot.Status === "available"));
+    } catch (error) {
+      toast((error as Error).message.toString());
+    }
+  }
 
   function handleLogout() {
     changeToken();
@@ -45,19 +62,22 @@ const Homepage = () => {
           {user?.role === "operator" ? (
             <>
               <div className="flex flex-col gap-5">
-                <Card className="pt-4 bg-gradient-to-b from-orange-400 to-yellow-400 border-none rounded-2xl text-white drop-shadow-md">
-                  <CardContent className="space-y-12">
-                    <div className="flex gap-4">
-                      <MapPinned className="w-7 h-7" />
-                      <p className="font-medium text-2xl">
-                        Available Parking Place
+                <Link to={`/list-parking`}>
+                  <Card className="pt-4 bg-gradient-to-b from-orange-400 to-yellow-400 border-none rounded-2xl text-white drop-shadow-md">
+                    <CardContent className="space-y-12">
+                      <div className="flex gap-4">
+                        <MapPinned className="w-7 h-7" />
+                        <p className="font-medium text-2xl">
+                          Available Parking Place
+                        </p>
+                      </div>
+                      <p className="flex font-bold text-4xl gap-2">
+                        {data.length}
+                        <span>Places</span>
                       </p>
-                    </div>
-                    <p className="flex font-bold text-4xl gap-2">
-                      4<span>Places</span>
-                    </p>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </Link>
                 <Card className="pt-4 border-2 border-orange-400 rounded-2xl drop-shadow-md">
                   <CardContent className="space-y-12">
                     <div className="flex gap-4">
@@ -70,9 +90,11 @@ const Homepage = () => {
                   </CardContent>
                 </Card>
               </div>
-              <div className="absolute p-4 bottom-0 right-0">
-                <Plus className=" bg-gradient-to-br from-orange-400 to-yellow-400 rounded-full w-12 h-12 p-2 text-white" />
-              </div>
+              <Link to={`/parking-location`}>
+                <div className="absolute p-4 bottom-0 right-0">
+                  <Plus className=" bg-gradient-to-br from-orange-400 to-yellow-400 rounded-full w-12 h-12 p-2 text-white" />
+                </div>
+              </Link>
             </>
           ) : (
             <>

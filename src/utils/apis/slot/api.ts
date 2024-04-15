@@ -1,6 +1,6 @@
 import { ApiDataArrayResponse, ApiResponse } from "@/utils/types/api";
 import axiosWithConfig from "../axiosWithConfig";
-import { ParkingSlot, SlotSchema } from "./type";
+import { ParkingSlot, SlotSchema, UpdateSlotSchema } from "./type";
 
 export const addNewParkingSlot = async (data: SlotSchema) => {
   try {
@@ -22,7 +22,7 @@ export const getAllParkingSlot = async () => {
 
 export const editParkingSlot = async (
   parkingslotID: string,
-  body: SlotSchema
+  body: UpdateSlotSchema
 ) => {
   try {
     const response = await axiosWithConfig.put(

@@ -1,38 +1,62 @@
-import ButtonSubmit from "@/components/button-submit";
-import DetailCard from "@/components/detail-card";
 import Layout from "@/components/layout";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import {
-  CustomFormField,
-  CustomFormSelect,
-} from "@/components/custom-formfield";
+import { CustomFormField } from "@/components/custom-formfield";
 import { Input } from "@/components/ui/input";
-import { useNavigate } from "react-router-dom";
-import { SlotSchema, slotSchema } from "@/utils/apis/slot/type";
+import { useNavigate, useParams } from "react-router-dom";
+import { UpdateSlotSchema, updateSlotSchema } from "@/utils/apis/slot/type";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { editParkingSlot } from "@/utils/apis/slot/api";
+import { editParkingSlot, getAllParkingSlot } from "@/utils/apis/slot/api";
 import { toast } from "sonner";
+import useParkingSlotStore from "@/utils/stores/parkingslot";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 const EditParkingSlot = () => {
+  const [showModal, setShowModal] = useState(false);
+  const params = useParams();
   const navigate = useNavigate();
+  const { editDatas, setEditDatas } = useParkingSlotStore();
 
-  const form = useForm<SlotSchema>({
-    resolver: zodResolver(slotSchema),
+  const form = useForm<UpdateSlotSchema>({
+    resolver: zodResolver(updateSlotSchema),
     defaultValues: {
-      vehicle_type: "car",
-      floor: 0,
-      slot: 0,
-      price: 0,
+      vehicle_type: editDatas ? editDatas.VehicleType : "car",
+      floor: editDatas ? editDatas.Floor : 0,
+      slot: editDatas ? editDatas.Slot : 0,
+      price: editDatas ? editDatas.Price : 0,
     },
   });
 
-  async function onSubmit(data: SlotSchema, parkingslotID: string) {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
     try {
-      const result = await editParkingSlot(data, parkingslotID);
+      if (showModal == false) {
+        setShowModal(true);
+        const result = await getAllParkingSlot();
+        const filteredData = result.data.filter(
+          (elemen) => elemen.ID == params.parkingslotID
+        );
+        setEditDatas(filteredData[0]);
+        form.setValue("vehicle_type", editDatas?.VehicleType);
+        form.setValue("floor", editDatas?.Floor!);
+        form.setValue("slot", editDatas?.Slot!);
+        form.setValue("price", editDatas?.Price!);
+      }
+    } catch (error) {
+      toast((error as Error).message.toString());
+    }
+  }
+
+  async function onSubmit(body: UpdateSlotSchema) {
+    try {
+      const result = await editParkingSlot(params.parkingslotID!, body);
 
       toast(result.message);
-      navigate("/profile");
+      navigate("/list-parking");
     } catch (error) {
       toast((error as Error).message);
     }
@@ -42,29 +66,28 @@ const EditParkingSlot = () => {
     <Layout>
       <div className="flex flex-col p-4 space-y-4 overflow-auto">
         <div className="flex flex-col p-4 space-y-4">
-          <DetailCard
-            key={1}
-            location_name={"Tunjungan Plaza"}
-            cover_image={"/public/tunjungan-plaza.jpg"}
-            city={"Surabaya"}
-          />
           <h1 className="flex justify-normal text-3xl font-semibold">
-            Add Parking Slot
+            Edit Parking Slot
           </h1>
           <Form {...form}>
             <form
               className="flex flex-col space-y-4 py-4 my-4"
-              onSubmit={form.handleSubmit(onSubmit(body, parkingslotID))}
+              onSubmit={form.handleSubmit(onSubmit)}
             >
-              <CustomFormSelect
+              <CustomFormField
                 control={form.control}
                 name="vehicle_type"
                 label="Vehicle Type"
-                options={[
-                  { value: "car", label: "car" },
-                  { value: "motorcycle", label: "motorcycle" },
-                ]}
-              />
+              >
+                {(field) => (
+                  <Input
+                    className="bg-slate-200"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    value={field.value}
+                  />
+                )}
+              </CustomFormField>
               <CustomFormField
                 control={form.control}
                 name="floor"
@@ -72,7 +95,7 @@ const EditParkingSlot = () => {
               >
                 {(field) => (
                   <Input
-                    {...field}
+                    className="bg-slate-200"
                     type="number"
                     placeholder="Floor"
                     disabled={form.formState.isSubmitting}
@@ -84,7 +107,7 @@ const EditParkingSlot = () => {
               <CustomFormField control={form.control} name="slot" label="Slot">
                 {(field) => (
                   <Input
-                    {...field}
+                    className="bg-slate-200"
                     type="number"
                     placeholder="Slot"
                     disabled={form.formState.isSubmitting}
@@ -110,11 +133,7 @@ const EditParkingSlot = () => {
                 )}
               </CustomFormField>
               <div className="flex flex-col">
-                <ButtonSubmit
-                  button_value="Submit"
-                  button_icon=""
-                  type="submit"
-                />
+                <Button type="submit">Submit</Button>
               </div>
             </form>
           </Form>

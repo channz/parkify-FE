@@ -13,17 +13,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  getAllParking,
-  getParkingByID,
-  getParkingWithUserByID,
-} from "@/utils/apis/parking/api";
+import { getAllParking } from "@/utils/apis/parking/api";
 import { Parking } from "@/utils/apis/parking/type";
 import { deleteUser, getProfile } from "@/utils/apis/user/api";
 import { useToken } from "@/utils/contexts/token";
 import { LogOut, SquarePen, Trash2 } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const Profile = () => {
@@ -31,13 +27,9 @@ const Profile = () => {
   const { user, changeToken } = useToken();
 
   const [data, setData] = useState<Parking[]>([]);
-  const [datas, setDatas] = useState<Parking>();
-
-  const params = useParams();
 
   useEffect(() => {
     fetchData();
-    fetchDatas();
   }, []);
 
   async function fetchData() {
@@ -50,15 +42,6 @@ const Profile = () => {
       setData(filteredData);
     } catch (error) {
       console.log(error);
-      toast((error as Error).message.toString());
-    }
-  }
-
-  async function fetchDatas() {
-    try {
-      const result = await getParkingByID(params.parkingID!);
-      setDatas(result.data);
-    } catch (error) {
       toast((error as Error).message.toString());
     }
   }
@@ -108,29 +91,17 @@ const Profile = () => {
                 </div>
               </CardContent>
             </Card>
-            {/* {user?.role === "operator" ? ( */}
-            {data.map((parking) => (
-              <ManagePark
-                key={parking.ID}
-                id={parking.ID}
-                content="Manage My Parking"
-              />
-            ))}
-            {/* ) : null} */}
-            {/* <Link to={`/parking-location/3/edit`}>
-              <Card
-                className="flex flex-col rounded-3xl drop-shadow-md"
-                key={datas?.ID}
-                id={datas?.ID}
-              >
-                <CardContent className="px-4 py-6 space-y-5">
-                  <div className="flex">
-                    <p className="font-semibold text-xl">Edit My Parking</p>
-                    <SquarePen className="my-auto ms-auto" />
-                  </div>
-                </CardContent>
-              </Card>
-            </Link> */}
+            {user?.role === "operator" ? (
+              <>
+                {data.map((parking) => (
+                  <ManagePark
+                    key={parking.ID}
+                    id={parking.ID}
+                    content="Manage My Parking"
+                  />
+                ))}
+              </>
+            ) : null}
           </div>
         </div>
         <div className="absolute bottom-0 p-4 w-full">

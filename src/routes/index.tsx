@@ -78,7 +78,7 @@ const router = createBrowserRouter([
         element: <ParkingSlot />,
       },
       {
-        path: "/parking-slot/edit",
+        path: "/parking-slot/:parkingslotID/edit",
         element: <EditParkingSlot />,
       },
       {

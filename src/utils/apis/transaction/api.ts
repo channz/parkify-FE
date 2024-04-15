@@ -11,9 +11,9 @@ export const addTransaction = async (data: TransactionSchema) => {
   }
 };
 
-export const getTransaction = async () => {
+export const getTransaction = async (transactionID: string) => {
   try {
-    const response = await axiosWithConfig.get(`/transaction`);
+    const response = await axiosWithConfig.get(`/transaction/${transactionID}`);
     return response.data as ApiDataResponse<Transaction>;
   } catch (error: any) {
     throw Error(error.response.data.message);
