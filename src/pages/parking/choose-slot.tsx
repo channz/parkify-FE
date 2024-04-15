@@ -15,13 +15,28 @@ import { getParkingByID } from "@/utils/apis/parking/api";
 import { Parking } from "@/utils/apis/parking/type";
 import { ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-
+import { addReservation } from "@/utils/apis/reservation/api";
+import { ReservationSchema, reservationSchema } from "@/utils/apis/reservation/type";
+import { Form }  from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 const ChooseSlot = () => {
   const params = useParams();
-
+  const navigate = useNavigate();
   const [data, setData] = useState<Parking>();
+  const form = useForm<ReservationSchema>({
+    resolver: zodResolver(reservationSchema),
+    defaultValues: {
+      parking_id: 0,
+      vehicle_type: "car",
+      floor: 0,
+      slot: 0,
+      price: 0,
+      reservation_id: 0,
+    },
+  });
 
   useEffect(() => {
     fetchData();
@@ -30,10 +45,20 @@ const ChooseSlot = () => {
   async function fetchData() {
     try {
       const result = await getParkingByID(params.parkingID!);
-
       setData(result.data);
     } catch (error) {
       toast((error as Error).message.toString());
+    }
+  }
+
+  async function onSubmit(body: ReservationSchema){
+    try {
+      body.parking_id = Number(data?.ID);
+      const res = await addReservation(body);
+      toast(res.message);
+      navigate("/reservations/:reservationID")
+    } catch (error){
+      toast ((error as Error).message);
     }
   }
 
@@ -49,12 +74,14 @@ const ChooseSlot = () => {
           />
           <p className="font-semibold text-md">Select Vehicle</p>
           <div className="flex">
-            <RadioGroup className="flex w-full gap-5" defaultValue="">
+            <RadioGroup 
+              className="flex w-full gap-5" defaultValue=""
+              >
               <Card className="flex flex-row items-center gap-1 w-1/2 p-5 rounded-3xl border-2 active:border-orange-400 focus-within:border-orange-400">
                 <RadioGroupItem value="car" id="r1" />
                 <img
                   className="h-12 w-full object-contain"
-                  src="/public/car.png"
+                  src="/car.png"
                   alt=""
                   id="r1"
                 />
@@ -67,7 +94,7 @@ const ChooseSlot = () => {
                 />
                 <img
                   className="h-12 w-full object-contain"
-                  src="/public/motorcycle.png"
+                  src="/motorcycle.png"
                   alt=""
                   id="r2"
                 />
@@ -122,11 +149,17 @@ const ChooseSlot = () => {
               <p className="font-semibold text-lg">1st Floor | 1</p>
             </CardContent>
           </Card>
+          <Form {...form}>
+              <form
+                className="flex flex-col space-y-4 py-4 my-4"
+                onSubmit={form.handleSubmit(onSubmit)}
+              />
+          </Form>
           <div className="flex flex-col w-1/2 leading-none">
             <ButtonSubmit
               button_value="Book Now"
               button_icon={<ArrowUpRight />}
-              type=""
+              type="booking now"
             />
           </div>
         </div>

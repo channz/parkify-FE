@@ -7,7 +7,7 @@ import {
   LogOut,
   MapPinned,
   History,
-  QrCode,
+  
   Plus,
   Receipt,
   Settings2,
@@ -15,6 +15,7 @@ import {
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import QRCode from "react-qr-code";
 
 const Homepage = () => {
   const { changeToken, user } = useToken();
@@ -115,8 +116,13 @@ const Homepage = () => {
               <div className="flex flex-col">
                 <Card className="pt-4 border-2 border-orange-400 rounded-2xl drop-shadow-md">
                   <CardContent className="space-y-8">
-                    <QrCode className="w-7 h-7" />
-                    <p className="font-semibold text-2xl">There is no QR yet</p>
+                    <QRCode 
+                    size={256}
+                    style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                    value={"1234567890"}
+                    viewBox={`0 0 256 256`}
+                    />
+                    <p className="font-semibold text-2xl">Your QR Code</p>
                   </CardContent>
                 </Card>
               </div>

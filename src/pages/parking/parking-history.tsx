@@ -1,7 +1,14 @@
 import Layout from "@/components/layout";
 import HistoryLocation from "@/components/history-location";
+import { getReservation } from "@/utils/apis/reservation/api";
+import { useEffect } from "react";
+import { toast } from "sonner";
+
 
 const ParkingHistory = () => {
+  useEffect (() => {
+    fetchData();
+  }, []);
   const parkingHistoryData = [
     {
       date: "Yesterday 12.00",
@@ -10,6 +17,16 @@ const ParkingHistory = () => {
       price: "Rp 25.000",
     }
   ]
+
+  async function fetchData(){
+    try {
+      const res = await getReservation();
+      toast(res?.message);
+      fetchData();
+    } catch (error){
+      toast ((error as Error).message);
+    }
+  }
 
   return (
     <Layout>
