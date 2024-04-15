@@ -4,7 +4,6 @@ import { Form } from "@/components/ui/form";
 import { CustomFormField } from "@/components/custom-formfield";
 import { useForm } from "react-hook-form";
 import {
-  Parking,
   UpdateParkingSchema,
   updateParkingSchema,
 } from "@/utils/apis/parking/type";
@@ -16,17 +15,13 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { getProfile } from "@/utils/apis/user/api";
 import { Loader2 } from "lucide-react";
+import useParkingStore from "@/utils/stores/parking";
 
-interface Props {
-  editData: Parking;
-}
-
-const EditParkingLocation = (props: Props) => {
-  const { editData } = props;
+const EditParkingLocation = () => {
+  const [showModal, setShowModal] = useState(false);
+  const { editData, setEditData } = useParkingStore();
   const navigate = useNavigate();
   const params = useParams();
-
-  const [data, setData] = useState<Parking>();
 
   const [isLoading, setisLoading] = useState(true);
 
@@ -41,20 +36,22 @@ const EditParkingLocation = (props: Props) => {
 
   useEffect(() => {
     fetchData();
-    form.setValue("location", data?.location!);
-    form.setValue("city", data?.city!);
   }, [editData, form.formState.isSubmitSuccessful]);
 
   async function fetchData() {
     try {
+      // if (showModal == false) {
+      //   setShowModal(true);
       const userResponse = await getProfile();
       const result = await getAllParking();
       const filteredData = result.data.filter(
         (parking) => parking.user_id == userResponse.data.user_id
       );
-      setData(filteredData[0]);
-      console.log(filteredData);
+      setEditData(filteredData[0]);
       setisLoading(false);
+      form.setValue("location", editData?.location!);
+      form.setValue("city", editData?.city!);
+      // }
     } catch (error) {
       toast((error as Error).message.toString());
     }
@@ -75,7 +72,7 @@ const EditParkingLocation = (props: Props) => {
     <Layout>
       <div className="flex flex-col p-4 space-y-4 overflow-auto">
         <h1 className="flex justify-center text-3xl font-semibold">
-          Add Parking Location
+          Edit Parking Location
         </h1>
         <Form {...form}>
           {isLoading ? (

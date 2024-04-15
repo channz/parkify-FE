@@ -1,4 +1,3 @@
-import { deleteParkingSlot } from "@/utils/apis/slot/api";
 import { Card, CardContent } from "./ui/card";
 import {
   DropdownMenu,
@@ -6,54 +5,43 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { toast } from "sonner";
-import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Ellipsis } from "lucide-react";
+import { Badge } from "./ui/badge";
 
 interface Props {
   slot: number;
-  price: number;
+  price: any;
+  status: string;
+  id: string;
+  onClickDelete: () => void;
 }
 
 const SlotCard = (props: Props) => {
-  const { slot, price } = props;
-  const [first, setfirst] = useState();
-
-  const params = useParams();
-
-  async function handleDelete() {
-    try {
-      console.log("tes");
-      const result = await deleteParkingSlot(params.parkingslotID!);
-      toast(result?.message);
-    } catch (error) {
-      toast((error as Error).message);
-    }
-  }
+  const { slot, price, status, id, onClickDelete } = props;
 
   return (
     <Card className="rounded-3xl">
       <CardContent className="flex p-5">
-        <div className="flex">
-          <div className="flex flex-col w-3/5">
-            <div className="flex flex-col">
-              <h2>{slot}</h2>
-              <p>{price}</p>
-            </div>
-          </div>
-          <div className="flex">
-            <DropdownMenu>
-              <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-              <DropdownMenuContent>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-semibold text-2xl">{slot}</h2>
+          <p className="font-semibold text-xs">Rp. {price}</p>
+          <Badge className="font-semibold text-xs">{status}</Badge>
+        </div>
+        <div className="flex ms-auto">
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Ellipsis />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" forceMount>
+              <Link to={`/parking-slot/${id}/edit`}>
                 <DropdownMenuItem>Edit</DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => handleDelete(params.parkingslotID!)}
-                >
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+              </Link>
+              <DropdownMenuItem onClick={onClickDelete}>
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </CardContent>
     </Card>

@@ -44,7 +44,7 @@ const ChooseSlot = () => {
           <DetailCard
             key={data?.location}
             location_name={data?.location!}
-            cover_image={data?.imageloc!}
+            cover_image={data?.image_loc!}
             city={data?.city!}
           />
           <p className="font-semibold text-md">Select Vehicle</p>

@@ -7,9 +7,11 @@ import { useEffect, useState } from "react";
 import { getTransaction } from "@/utils/apis/transaction/api";
 import { Transaction } from "@/utils/apis/transaction/type";
 import { toast } from "sonner";
+import { useParams } from "react-router-dom";
 
 const DetailPayment = () => {
   const [data, setData] = useState<Transaction>();
+  const params = useParams();
 
   useEffect(() => {
     fetchData();
@@ -17,7 +19,7 @@ const DetailPayment = () => {
 
   async function fetchData() {
     try {
-      const result = await getTransaction();
+      const result = await getTransaction(params.transactionID!);
       setData(result.data);
     } catch (error) {
       toast((error as Error).message.toString());

@@ -23,19 +23,20 @@ const ParkingSlot = () => {
 
   const [data, setData] = useState<Parking>();
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const form = useForm<SlotSchema>({
     resolver: zodResolver(slotSchema),
     defaultValues: {
+      parking_id: 0,
       vehicle_type: "car",
       floor: 0,
       slot: 0,
       price: 0,
     },
   });
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   async function fetchData() {
     try {
@@ -50,10 +51,10 @@ const ParkingSlot = () => {
     }
   }
 
-  async function onSubmit(data: SlotSchema) {
+  async function onSubmit(body: SlotSchema) {
     try {
-      const result = await addNewParkingSlot(data);
-
+      body.parking_id = Number(data?.ID);
+      const result = await addNewParkingSlot(body);
       toast(result.message);
       navigate("/profile");
     } catch (error) {

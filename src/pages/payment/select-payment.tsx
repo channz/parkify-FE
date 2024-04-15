@@ -2,6 +2,7 @@ import ButtonSubmit from "@/components/button-submit";
 import { CustomFormSelect } from "@/components/custom-formfield";
 import DetailCard from "@/components/detail-card";
 import Layout from "@/components/layout";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
@@ -26,6 +27,7 @@ const SelectPayment = () => {
   const form = useForm<TransactionSchema>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
+      reservation_id: 0,
       payment_method: "",
     },
   });
@@ -37,13 +39,16 @@ const SelectPayment = () => {
   async function fetchData() {
     try {
       const result = await getReservationByID(params.reservationID!);
+      console.log(result);
       setData(result.data);
     } catch (error) {}
   }
 
-  async function onSubmit(data: TransactionSchema) {
+  async function onSubmit(body: TransactionSchema) {
     try {
-      const result = await addTransaction(data);
+      body.reservation_id = Number(data?.reservation_id);
+      console.log(body.reservation_id);
+      const result = await addTransaction(body);
 
       toast(result.message);
       navigate(`/detail-payment`);
@@ -88,6 +93,7 @@ const SelectPayment = () => {
                 label="Select Payment"
                 options={[{ value: "VA BCA", label: "VA BCA" }]}
               />
+              <Button type="submit">Submit</Button>
             </form>
           </Form>
         </div>
@@ -102,11 +108,11 @@ const SelectPayment = () => {
               </CardContent>
             </Card>
             <div className="flex flex-col">
-              <ButtonSubmit
+              {/* <ButtonSubmit
                 button_value="Confirm"
                 button_icon=""
                 type="submit"
-              />
+              /> */}
             </div>
           </div>
         </div>
