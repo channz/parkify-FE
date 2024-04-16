@@ -45,7 +45,7 @@ export interface Parking<T = any> {
   city: string;
   imageloc: string;
   image_loc: string;
-  parking_slot: T;
+  parking_slots: T;
   user_id: string;
   user: User;
 }

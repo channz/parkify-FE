@@ -18,7 +18,6 @@ import { Loader2 } from "lucide-react";
 import useParkingStore from "@/utils/stores/parking";
 
 const EditParkingLocation = () => {
-  const [showModal, setShowModal] = useState(false);
   const { editData, setEditData } = useParkingStore();
   const navigate = useNavigate();
   const params = useParams();
@@ -36,12 +35,10 @@ const EditParkingLocation = () => {
 
   useEffect(() => {
     fetchData();
-  }, [editData, form.formState.isSubmitSuccessful]);
+  }, [form.formState.isSubmitSuccessful]);
 
   async function fetchData() {
     try {
-      // if (showModal == false) {
-      //   setShowModal(true);
       const userResponse = await getProfile();
       const result = await getAllParking();
       const filteredData = result.data.filter(
@@ -49,9 +46,8 @@ const EditParkingLocation = () => {
       );
       setEditData(filteredData[0]);
       setisLoading(false);
-      form.setValue("location", editData?.location!);
-      form.setValue("city", editData?.city!);
-      // }
+      form.setValue("location", filteredData[0].location!);
+      form.setValue("city", filteredData[0].city!);
     } catch (error) {
       toast((error as Error).message.toString());
     }
@@ -126,8 +122,13 @@ const EditParkingLocation = () => {
                   />
                 )}
               </CustomFormField>
-              <div className="flex flex-col">
-                <Button type="submit">Submit</Button>
+              <div className="flex">
+                <Button
+                  className="flex w-full h-full bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl font-bold text-lg"
+                  type="submit"
+                >
+                  Submit
+                </Button>
               </div>
             </form>
           )}

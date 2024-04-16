@@ -46,74 +46,80 @@ const EditProfile = () => {
 
   return (
     <Layout>
-      <Form {...form}>
-        <div className="h-2/5 bg-gradient-to-b from-orange-400 to-yellow-400">
-          <form
-            className="flex flex-col"
-            onSubmit={form.handleSubmit(onSubmit)}
-            key="updateProfile"
-          >
-            <div className="flex flex-col px-4 py-32 space-y-5">
-              <p className="text-white font-semibold text-3xl">Edit Profile</p>
-              <Card className="flex flex-col rounded-3xl drop-shadow-md">
-                <CardContent className="px-4 py-8 space-y-5">
-                  <CustomFormField
-                    control={form.control}
-                    name="fullname"
-                    label="Full Name"
-                  >
-                    {(field) => (
-                      <Input
-                        {...field}
-                        placeholder="Enter your full name"
-                        disabled={form.formState.isSubmitting}
-                        aria-disabled={form.formState.isSubmitting}
-                        value={field.value as string}
-                      />
-                    )}
-                  </CustomFormField>
-                  <CustomFormField
-                    control={form.control}
-                    name="password"
-                    label="Password"
-                  >
-                    {(field) => (
-                      <Input
-                        {...field}
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Set an 8 character password"
-                        disabled={form.formState.isSubmitting}
-                        aria-disabled={form.formState.isSubmitting}
-                        value={field.value as string}
-                      />
-                    )}
-                  </CustomFormField>
-                  <div className="flex space-x-2 ">
-                    <Checkbox
-                      className="flex"
-                      id="terms"
-                      onClick={toggleShowPassword}
-                    />
-                    <label
-                      htmlFor="terms"
-                      className="flex text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      <div className="relative w-full h-full">
+        <Form {...form}>
+          <div className="h-2/5 bg-gradient-to-b from-orange-400 to-yellow-400">
+            <form
+              className="flex flex-col"
+              onSubmit={form.handleSubmit(onSubmit)}
+              key="updateProfile"
+            >
+              <div className="flex flex-col px-4 py-8 space-y-5">
+                <p className="text-white font-semibold text-center mb-8 text-3xl">
+                  Edit Profile
+                </p>
+                <Card className="flex flex-col rounded-3xl drop-shadow-md">
+                  <CardContent className="px-4 py-12 space-y-5">
+                    <CustomFormField
+                      control={form.control}
+                      name="fullname"
+                      label="Full Name"
                     >
-                      Show password
-                    </label>
-                  </div>
-                  <Button
-                    className="flex w-full h-full bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl font-bold text-lg"
-                    type="submit"
-                    id="updateProfile"
-                  >
-                    Save Changes
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          </form>
-        </div>
-      </Form>
+                      {(field) => (
+                        <Input
+                          {...field}
+                          placeholder="Enter your full name"
+                          disabled={form.formState.isSubmitting}
+                          aria-disabled={form.formState.isSubmitting}
+                          value={field.value as string}
+                        />
+                      )}
+                    </CustomFormField>
+                    <CustomFormField
+                      control={form.control}
+                      name="password"
+                      label="Password"
+                    >
+                      {(field) => (
+                        <Input
+                          {...field}
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Set an 8 character password"
+                          disabled={form.formState.isSubmitting}
+                          aria-disabled={form.formState.isSubmitting}
+                          value={field.value as string}
+                        />
+                      )}
+                    </CustomFormField>
+                    <div className="flex space-x-2 ">
+                      <Checkbox
+                        className="flex"
+                        id="terms"
+                        onClick={toggleShowPassword}
+                      />
+                      <label
+                        htmlFor="terms"
+                        className="flex text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        Show password
+                      </label>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+              <div className="absolute bottom-0 w-full p-4">
+                <Button
+                  className="flex w-full h-full bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl font-bold text-lg"
+                  type="submit"
+                  id="updateProfile"
+                >
+                  Save Changes
+                </Button>
+              </div>
+            </form>
+          </div>
+        </Form>
+      </div>
     </Layout>
   );
 };

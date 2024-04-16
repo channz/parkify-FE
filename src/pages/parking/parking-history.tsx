@@ -1,48 +1,45 @@
 import Layout from "@/components/layout";
 import HistoryLocation from "@/components/history-location";
 import { getReservation } from "@/utils/apis/reservation/api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
+import { Reservation } from "@/utils/apis/reservation/type";
 
 const ParkingHistory = () => {
-  useEffect (() => {
+  const [data, setData] = useState<Reservation[]>([]);
+
+  useEffect(() => {
     fetchData();
   }, []);
-  const parkingHistoryData = [
-    {
-      date: "Yesterday 12.00",
-      name: "Car Park",
-      location: "Tunjungan Plaza, Surabaya",
-      price: "Rp 25.000",
-    }
-  ]
 
-  async function fetchData(){
+  async function fetchData() {
     try {
-      const res = await getReservation();
-      toast(res?.message);
-      fetchData();
-    } catch (error){
-      toast ((error as Error).message);
+      const result = await getReservation();
+      setData(result.data);
+    } catch (error) {
+      toast((error as Error).message.toString());
     }
   }
 
   return (
     <Layout>
-      <div className="flex flex-col p-4 space-y-4 overflow-auto">
-        <section className="flex flex-col px-5 max-w-[368px]">
-          <h2 className="w-full text-sm font-bold text-black">Parking History</h2>
-            {parkingHistoryData.map((item, index) => (
-              <HistoryLocation
-                key={index}
-                date={item.date}
-                name={item.name}
-                location={item.location}
-                price={item.price}
-              />
-            ))}
-        </section>  
+      <div className="flex flex-col px-4 py-8 space-y-4 overflow-auto">
+        <section className="flex flex-col space-y-4">
+          <h2 className="w-full text-3xl text-center font-semibold text-black">
+            Parking History
+          </h2>
+          {data.map((reservation) => (
+            <HistoryLocation
+              key={reservation.reservation_id}
+              id={reservation.reservation_id}
+              slot={reservation.slot}
+              floor={reservation.floor}
+              location={reservation.location}
+              city={reservation.city}
+              price={reservation.price}
+            />
+          ))}
+        </section>
       </div>
     </Layout>
   );

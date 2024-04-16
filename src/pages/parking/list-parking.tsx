@@ -2,13 +2,6 @@ import { CustomFormSelect } from "@/components/custom-formfield";
 import Layout from "@/components/layout";
 import SlotCard from "@/components/slot-card";
 import { Form } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { deleteParkingSlot, getAllParkingSlot } from "@/utils/apis/slot/api";
 import { ParkingSlot, SlotSchema, slotSchema } from "@/utils/apis/slot/type";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -55,8 +48,11 @@ const ListParking = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col p-4 space-y-4 overflow-auto">
-        <div className="flex flex-col p-4 space-y-4">
+      <div className="flex flex-col px-4 py-8 space-y-4 overflow-auto">
+        <div className="flex flex-col space-y-4">
+          <p className="text-center text-3xl font-semibold">
+            List Parking Slot
+          </p>
           <Form {...form}>
             <form action="">
               <CustomFormSelect
@@ -70,30 +66,24 @@ const ListParking = () => {
               />
             </form>
           </Form>
-          <p className="font-semibold text-md">Vehicle Type</p>
-          <Select>
-            <SelectTrigger className="p-4 h-12 rounded-2xl">
-              <SelectValue placeholder="Vehicle" />
-            </SelectTrigger>
-            <SelectContent className="flex">
-              <SelectItem className="flex" value="Car">
-                Car
-              </SelectItem>
-              <SelectItem className="flex" value="Motorcycle">
-                Motorcycle
-              </SelectItem>
-            </SelectContent>
-          </Select>
-          {data?.map((parkingslot) => (
-            <SlotCard
-              key={parkingslot.ID}
-              id={parkingslot.ID}
-              slot={parkingslot.Slot}
-              price={parkingslot.Price}
-              status={parkingslot.Status}
-              onClickDelete={() => handleDelete(parkingslot.ID)}
-            />
-          ))}
+          <p className="text-sm font-medium">Slot</p>
+          {data
+            .filter((parkingslot) =>
+              form.getValues("vehicle_type")
+                ? parkingslot.VehicleType === form.getValues("vehicle_type")
+                : true
+            )
+            .map((parkingslot) => (
+              <SlotCard
+                key={parkingslot.ID}
+                id={parkingslot.ID}
+                floor={parkingslot.Floor}
+                slot={parkingslot.Slot}
+                price={parkingslot.Price}
+                status={parkingslot.Status}
+                onClickDelete={() => handleDelete(parkingslot.ID)}
+              />
+            ))}
         </div>
       </div>
     </Layout>

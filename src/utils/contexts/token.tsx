@@ -63,7 +63,6 @@ export const TokenProvider = ({ children }: Props) => {
     (token?: string) => {
       const newToken = token ?? "";
       setToken(newToken);
-      console.log(token);
       if (newToken !== "") {
         localStorage.setItem("token", newToken);
       } else {

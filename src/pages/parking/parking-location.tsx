@@ -8,7 +8,7 @@ import { addNewParking } from "@/utils/apis/parking/api";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
+import ButtonSubmit from "@/components/button-submit";
 
 const ParkingLocation = () => {
   const navigate = useNavigate();
@@ -36,16 +36,16 @@ const ParkingLocation = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col p-4 space-y-4 overflow-auto">
-        <h1 className="flex justify-center text-3xl font-semibold">
-          Add Parking Location
-        </h1>
+      <div className="relative w-full h-full">
         <Form {...form}>
-          <div className="">
-            <form
-              className="flex flex-col space-y-4 px-4 py-4 my-4"
-              onSubmit={form.handleSubmit(onSubmit)}
-            >
+          <form
+            className="flex flex-col"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <div className="flex flex-col px-4 py-8 space-y-4">
+              <h1 className="flex justify-center text-3xl mb-4 font-semibold">
+                Add Parking Location
+              </h1>
               <CustomFormField
                 control={form.control}
                 name="location"
@@ -86,9 +86,19 @@ const ParkingLocation = () => {
                   />
                 )}
               </CustomFormField>
-              <Button type="submit">Submit</Button>
-            </form>
-          </div>
+            </div>
+            <div className="absolute bottom-0 p-4 w-full">
+              <div className="flex flex-col w-full">
+                <div className="flex flex-col">
+                  <ButtonSubmit
+                    button_value="Confirm"
+                    button_icon=""
+                    type="submit"
+                  />
+                </div>
+              </div>
+            </div>
+          </form>
         </Form>
       </div>
     </Layout>
