@@ -64,86 +64,92 @@ const ParkingSlot = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col p-4 space-y-4 overflow-auto">
-        <div className="flex flex-col p-4 space-y-4">
-          <DetailCard3
-            id={data?.ID}
-            key={data?.ID}
-            location_name={data?.location!}
-            cover_image={data?.imageloc}
-            city={data?.city!}
-          />
-          <h1 className="flex justify-normal text-3xl font-semibold">
-            Add Parking Slot
-          </h1>
-          <Form {...form}>
-            <form
-              className="flex flex-col space-y-4 py-4 my-4"
-              onSubmit={form.handleSubmit(onSubmit)}
-            >
-              <CustomFormSelect
-                control={form.control}
-                name="vehicle_type"
-                label="Vehicle Type"
-                options={[
-                  { value: "car", label: "car" },
-                  { value: "motorcycle", label: "motorcycle" },
-                ]}
-              />
-              <CustomFormField
-                control={form.control}
-                name="floor"
-                label="Floor"
-              >
-                {(field) => (
-                  <Input
-                    {...field}
-                    type="number"
-                    placeholder="Floor"
-                    disabled={form.formState.isSubmitting}
-                    aria-disabled={form.formState.isSubmitting}
-                    value={Number(field.value)}
-                  />
-                )}
-              </CustomFormField>
-              <CustomFormField control={form.control} name="slot" label="Slot">
-                {(field) => (
-                  <Input
-                    {...field}
-                    type="number"
-                    placeholder="Slot"
-                    disabled={form.formState.isSubmitting}
-                    aria-disabled={form.formState.isSubmitting}
-                    value={Number(field.value)}
-                  />
-                )}
-              </CustomFormField>
-              <CustomFormField
-                control={form.control}
-                name="price"
-                label="Price"
-              >
-                {(field) => (
-                  <Input
-                    {...field}
-                    type="number"
-                    placeholder="Price"
-                    disabled={form.formState.isSubmitting}
-                    aria-disabled={form.formState.isSubmitting}
-                    value={Number(field.value)}
-                  />
-                )}
-              </CustomFormField>
-              <div className="flex flex-col">
+      <div className="relative w-full h-full">
+        <Form {...form}>
+          <form
+            className="flex flex-col py-4"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <div className="flex flex-col overflow-auto">
+              <div className="flex flex-col px-4 space-y-4">
+                <DetailCard3
+                  id={data?.ID}
+                  key={data?.ID}
+                  location_name={data?.location!}
+                  cover_image={data?.imageloc}
+                  city={data?.city!}
+                />
+                <h1 className="flex justify-normal text-3xl font-semibold">
+                  Add Parking Slot
+                </h1>
+                <CustomFormSelect
+                  control={form.control}
+                  name="vehicle_type"
+                  label="Vehicle Type"
+                  options={[
+                    { value: "car", label: "car" },
+                    { value: "motorcycle", label: "motorcycle" },
+                  ]}
+                />
+                <CustomFormField
+                  control={form.control}
+                  name="floor"
+                  label="Floor"
+                >
+                  {(field) => (
+                    <Input
+                      {...field}
+                      type="number"
+                      placeholder="Floor"
+                      disabled={form.formState.isSubmitting}
+                      aria-disabled={form.formState.isSubmitting}
+                      value={Number(field.value)}
+                    />
+                  )}
+                </CustomFormField>
+                <CustomFormField
+                  control={form.control}
+                  name="slot"
+                  label="Slot"
+                >
+                  {(field) => (
+                    <Input
+                      {...field}
+                      type="number"
+                      placeholder="Slot"
+                      disabled={form.formState.isSubmitting}
+                      aria-disabled={form.formState.isSubmitting}
+                      value={Number(field.value)}
+                    />
+                  )}
+                </CustomFormField>
+                <CustomFormField
+                  control={form.control}
+                  name="price"
+                  label="Price"
+                >
+                  {(field) => (
+                    <Input
+                      {...field}
+                      type="number"
+                      placeholder="Price"
+                      disabled={form.formState.isSubmitting}
+                      aria-disabled={form.formState.isSubmitting}
+                      value={Number(field.value)}
+                    />
+                  )}
+                </CustomFormField>
+              </div>
+              <div className="absolute bottom-0 w-full p-4">
                 <ButtonSubmit
                   button_value="Submit"
                   button_icon=""
                   type="submit"
                 />
               </div>
-            </form>
-          </Form>
-        </div>
+            </div>
+          </form>
+        </Form>
       </div>
     </Layout>
   );

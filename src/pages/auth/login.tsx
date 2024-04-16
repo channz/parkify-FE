@@ -1,6 +1,6 @@
 import ButtonSubmit from "@/components/button-submit";
 import { CustomFormField } from "@/components/custom-formfield";
-import Layout from "@/components/layout";
+import LayoutAuth from "@/components/layout-auth";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -40,7 +40,7 @@ const Login = () => {
   }
 
   return (
-    <Layout>
+    <LayoutAuth>
       <div className="flex flex-col">
         <img
           src="/logo-parkify.png"
@@ -107,7 +107,7 @@ const Login = () => {
           </span>
         </p>
       </div>
-    </Layout>
+    </LayoutAuth>
   );
 };
 

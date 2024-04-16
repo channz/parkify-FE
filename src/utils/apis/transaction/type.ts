@@ -13,6 +13,16 @@ export interface Transaction {
   payment_method: string;
   va_number: number;
   status_message: string;
+  parking_id: string;
+  parkingslot_id: string;
+  location: string;
+  city: string;
+  vehicle_type: string;
+  floor: string;
+  slot: number;
+  price: number;
+  virtual_account: string;
+  image_loc: string;
 }
 
 export type TransactionSchema = z.infer<typeof transactionSchema>;

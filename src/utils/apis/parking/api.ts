@@ -7,6 +7,7 @@ import axiosWithConfig from "../axiosWithConfig";
 import { AddParkingSchema, Parking, UpdateParkingSchema } from "./type";
 import { checkProperty, valueFormatData } from "@/utils/formatter";
 import { getProfile } from "../user/api";
+import { ParkingSlot } from "../slot/type";
 
 export const addNewParking = async (body: AddParkingSchema) => {
   try {
@@ -41,7 +42,7 @@ export const getAllParking = async () => {
 export const getParkingByID = async (parkingID: string) => {
   try {
     const response = await axiosWithConfig.get(`/parking/${parkingID}`);
-    return response.data as ApiDataResponse<Parking>;
+    return response.data as ApiDataResponse<Parking<ParkingSlot[]>>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }

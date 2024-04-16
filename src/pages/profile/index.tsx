@@ -68,8 +68,10 @@ const Profile = () => {
     <Layout>
       <div className="relative h-full w-full">
         <div className="h-2/5 bg-gradient-to-b from-orange-400 to-yellow-400">
-          <div className="flex flex-col px-4 py-32 space-y-5">
-            <p className="text-white font-semibold text-3xl">Profile</p>
+          <div className="flex flex-col px-4 py-8 space-y-4">
+            <p className="text-white font-semibold text-3xl text-center mb-8">
+              Profile
+            </p>
             <Card className="flex flex-col rounded-3xl drop-shadow-md">
               <CardContent className="p-4 space-y-5">
                 <div className="flex">

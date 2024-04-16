@@ -11,6 +11,7 @@ import { Badge } from "./ui/badge";
 
 interface Props {
   slot: number;
+  floor: number;
   price: any;
   status: string;
   id: string;
@@ -18,15 +19,23 @@ interface Props {
 }
 
 const SlotCard = (props: Props) => {
-  const { slot, price, status, id, onClickDelete } = props;
+  const { slot, price, status, floor, id, onClickDelete } = props;
+
+  const statusClass = status === "available" ? "bg-green-400" : "bg-red-400";
 
   return (
     <Card className="rounded-3xl">
       <CardContent className="flex p-5">
-        <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-2xl">{slot}</h2>
+        <div className="flex-col gap-2 space-y-2">
+          <h2 className="font-semibold text-2xl">
+            Floor {floor} | Slot {slot}
+          </h2>
           <p className="font-semibold text-xs">Rp. {price}</p>
-          <Badge className="font-semibold text-xs">{status}</Badge>
+          <Badge
+            className={`font-semibold text-xs text-zinc-700 flex-grow-0 ${statusClass}`}
+          >
+            {status}
+          </Badge>
         </div>
         <div className="flex ms-auto">
           <DropdownMenu>

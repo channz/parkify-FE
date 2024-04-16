@@ -3,7 +3,7 @@ import {
   CustomFormField,
   CustomFormRadio,
 } from "@/components/custom-formfield";
-import Layout from "@/components/layout";
+import LayoutAuth from "@/components/layout-auth";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -41,7 +41,7 @@ const Register = () => {
   }
 
   return (
-    <Layout>
+    <LayoutAuth>
       <div className="flex flex-col">
         <img
           src="/logo-parkify.png"
@@ -136,7 +136,7 @@ const Register = () => {
           </span>
         </p>
       </div>
-    </Layout>
+    </LayoutAuth>
   );
 };
 
