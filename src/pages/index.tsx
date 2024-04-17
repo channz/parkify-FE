@@ -10,6 +10,7 @@ import {
   Plus,
   Receipt,
   Settings2,
+  QrCode,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -27,9 +28,12 @@ const Homepage = () => {
   );
 
   useEffect(() => {
-    fetchData();
-    fetchDataReservation();
-  }, []);
+    if (user?.role === "operator") {
+      fetchData();
+    } else {
+      fetchDataReservation();
+    }
+  }, [user?.role]);
 
   async function fetchData() {
     try {
@@ -107,7 +111,7 @@ const Homepage = () => {
                         <p className="font-medium text-2xl">Income This Day</p>
                       </div>
                       <p className="flex font-bold text-4xl gap-2">
-                        Rp.<span>{totalPrice}</span>
+                        Rp.<span>{totalPrice.toLocaleString("id-ID")}</span>
                       </p>
                     </CardContent>
                   </Card>
@@ -143,23 +147,35 @@ const Homepage = () => {
                 <div className="flex flex-col">
                   <Card className="pt-4 border-2 border-orange-400 rounded-2xl drop-shadow-md">
                     <CardContent className="space-y-8">
-                      {lastReservation ? (
+                      {lastReservation &&
+                      lastReservation.payment_status !== "success" ? (
                         <>
-                          <QRCode
-                            size={256}
-                            style={{
-                              height: "auto",
-                              maxWidth: "100%",
-                              width: "100%",
-                            }}
-                            value={lastReservation.reservation_id}
-                            viewBox={`0 0 256 256`}
-                          />
-                          <p className="font-semibold text-center text-2xl">
-                            Your QR Code
+                          <Link
+                            to={`/reservations/${lastReservation.reservation_id}`}
+                          >
+                            <QRCode
+                              size={256}
+                              style={{
+                                height: "auto",
+                                maxWidth: "100%",
+                                width: "100%",
+                              }}
+                              value={lastReservation.reservation_id}
+                              viewBox={`0 0 256 256`}
+                            />
+                            <p className="font-semibold text-center text-2xl">
+                              Your QR Code
+                            </p>
+                          </Link>
+                        </>
+                      ) : (
+                        <>
+                          <QrCode className="w-7 h-7" />
+                          <p className="font-semibold text-2xl">
+                            There is no QR yet
                           </p>
                         </>
-                      ) : null}
+                      )}
                     </CardContent>
                   </Card>
                 </div>
