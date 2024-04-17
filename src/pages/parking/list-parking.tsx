@@ -79,7 +79,7 @@ const ListParking = () => {
                 id={parkingslot.ID}
                 floor={parkingslot.Floor}
                 slot={parkingslot.Slot}
-                price={parkingslot.Price}
+                price={parkingslot.Price.toLocaleString("id-ID")}
                 status={parkingslot.Status}
                 onClickDelete={() => handleDelete(parkingslot.ID)}
               />

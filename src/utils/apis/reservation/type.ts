@@ -17,6 +17,7 @@ export interface Reservation {
   image_loc: string;
   location: string;
   city: string;
+  payment_status: string;
 }
 
 export type ReservationSchema = z.infer<typeof reservationSchema>;

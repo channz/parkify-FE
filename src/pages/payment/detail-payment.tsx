@@ -41,7 +41,9 @@ const DetailPayment = () => {
             <CardContent className="px-4 py-4 space-y-4">
               <div className="flex flex-col pb-2">
                 <p className="font-semibold text-3xl">Total Payment</p>
-                <p className="font-semibold text-2xl">Rp {data?.price}</p>
+                <p className="font-semibold text-2xl">
+                  Rp {data?.price.toLocaleString("id-ID")}
+                </p>
               </div>
               <div className="flex flex-col">
                 <p className="font-normal text-base">Payment Method : </p>

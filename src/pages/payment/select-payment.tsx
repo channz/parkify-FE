@@ -39,11 +39,14 @@ const SelectPayment = () => {
     try {
       const result = await getReservationByID(params.reservationID!);
       setData(result.data);
-    } catch (error) {}
+    } catch (error) {
+      toast((error as Error).message.toString());
+    }
   }
 
   async function onSubmit(body: TransactionSchema) {
     try {
+      body.reservation_id = Number(data?.reservation_id);
       const result = await addTransaction(body);
 
       toast(result.message);
@@ -107,7 +110,7 @@ const SelectPayment = () => {
                 <Card className="flex flex-col rounded-2xl border-orange-400">
                   <CardContent className="py-4">
                     <p className="font-semibold text-2xl">
-                      Rp. <span>{data?.price}</span>
+                      Rp. <span>{data?.price.toLocaleString("id-ID")}</span>
                     </p>
                   </CardContent>
                 </Card>

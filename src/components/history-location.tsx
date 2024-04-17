@@ -5,7 +5,7 @@ interface HistoryItemsProps {
   floor: number;
   location: string;
   city: string;
-  price: number;
+  price: string;
   id: string;
 }
 

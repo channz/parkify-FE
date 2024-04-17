@@ -66,7 +66,7 @@ const EditParkingSlot = () => {
             className="flex flex-col"
             onSubmit={form.handleSubmit(onSubmit)}
           >
-            <div className="flex flex-col overflow-auto">
+            <div className="flex flex-col pb-2 overflow-auto">
               <div className="flex flex-col px-4 py-8">
                 <h1 className="text-3xl text-center mb-8 font-semibold">
                   Edit Parking Slot
@@ -85,38 +85,40 @@ const EditParkingSlot = () => {
                     />
                   )}
                 </CustomFormField>
-                <CustomFormField
-                  control={form.control}
-                  name="floor"
-                  label="Floor"
-                >
-                  {(field) => (
-                    <Input
-                      className="bg-slate-200 pointer-events-none"
-                      type="number"
-                      placeholder="Floor"
-                      disabled={form.formState.isSubmitting}
-                      aria-disabled={form.formState.isSubmitting}
-                      value={Number(field.value)}
-                    />
-                  )}
-                </CustomFormField>
-                <CustomFormField
-                  control={form.control}
-                  name="slot"
-                  label="Slot"
-                >
-                  {(field) => (
-                    <Input
-                      className="bg-slate-200 pointer-events-none"
-                      type="number"
-                      placeholder="Slot"
-                      disabled={form.formState.isSubmitting}
-                      aria-disabled={form.formState.isSubmitting}
-                      value={Number(field.value)}
-                    />
-                  )}
-                </CustomFormField>
+                <div className="flex justify-between space-x-2">
+                  <CustomFormField
+                    control={form.control}
+                    name="floor"
+                    label="Floor"
+                  >
+                    {(field) => (
+                      <Input
+                        className="bg-slate-200 pointer-events-none"
+                        type="number"
+                        placeholder="Floor"
+                        disabled={form.formState.isSubmitting}
+                        aria-disabled={form.formState.isSubmitting}
+                        value={Number(field.value)}
+                      />
+                    )}
+                  </CustomFormField>
+                  <CustomFormField
+                    control={form.control}
+                    name="slot"
+                    label="Slot"
+                  >
+                    {(field) => (
+                      <Input
+                        className="bg-slate-200 pointer-events-none"
+                        type="number"
+                        placeholder="Slot"
+                        disabled={form.formState.isSubmitting}
+                        aria-disabled={form.formState.isSubmitting}
+                        value={Number(field.value)}
+                      />
+                    )}
+                  </CustomFormField>
+                </div>
                 <CustomFormField
                   control={form.control}
                   name="price"
@@ -134,15 +136,15 @@ const EditParkingSlot = () => {
                   )}
                 </CustomFormField>
               </div>
-              <div className="absolute bottom-0 w-full p-4">
-                <Button
-                  className="flex w-full h-full bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl font-bold text-lg"
-                  type="submit"
-                  id=""
-                >
-                  Submit
-                </Button>
-              </div>
+            </div>
+            <div className="absolute bottom-0 w-full p-4">
+              <Button
+                className="flex w-full h-full bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl font-bold text-lg"
+                type="submit"
+                id=""
+              >
+                Submit
+              </Button>
             </div>
           </form>
         </Form>
