@@ -25,3 +25,19 @@ export const valueFormatData = (value: any) => {
 
   return String(value);
 };
+
+export const formatOrdinals = (n: number): string => {
+  const pr = new Intl.PluralRules("en-US", { type: "ordinal" });
+  const suffixes: Map<string, string> = new Map([
+    ["one", "st"],
+    ["two", "nd"],
+    ["few", "rd"],
+    ["other", "th"],
+  ]);
+  const rule: string = pr.select(n);
+  const suffix: string | undefined = suffixes.get(rule);
+  if (suffix !== undefined) {
+    return `${n}${suffix}`;
+  }
+  return `${n}th`;
+};

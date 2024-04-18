@@ -32,7 +32,7 @@ const QRPage = () => {
       <div className="h-2/5 bg-gradient-to-b from-orange-400 to-yellow-400">
         <div className="flex flex-col px-4 py-8 space-y-5 w-full">
           <p className="font-semibold text-3xl text-center text-white">
-            Your Entry QR
+            Your QR
           </p>
           <Card className="flex rounded-3xl">
             <CardContent className="px-2 py-4 m-auto space-y-4">
@@ -53,7 +53,7 @@ const QRPage = () => {
               <Separator />
               <div className="flex">
                 <div className="flex flex-col">
-                  <p className="font-semibold text-3xl">{data?.floor} Floor</p>
+                  <p className="font-semibold text-3xl">Floor {data?.floor}</p>
                   <p className="font-medium text-base">Floor</p>
                 </div>
                 <div className="flex flex-col ms-auto">
@@ -78,9 +78,17 @@ const QRPage = () => {
             </CardContent>
           </Card>
           <div className="flex flex-col w-full h-14">
-            <Link to={`/reservations/${data?.reservation_id}/checkout`}>
-              <ButtonSubmit button_value="Exit Park" button_icon="" type="" />
-            </Link>
+            {data && data?.payment_status !== "success" ? (
+              <>
+                <Link to={`/reservations/${data?.reservation_id}/checkout`}>
+                  <ButtonSubmit
+                    button_value="Exit Park"
+                    button_icon=""
+                    type=""
+                  />
+                </Link>
+              </>
+            ) : null}
           </div>
         </div>
       </div>
