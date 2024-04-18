@@ -129,7 +129,7 @@ const ChooseSlot = () => {
     );
 
     const formatData = filteredByFloor.map((slot) => ({
-      label: `${formatOrdinals(slot.Slot)} Slot`,
+      label: `Slot ${slot.Slot}`,
       value: slot.ID,
     }));
 
