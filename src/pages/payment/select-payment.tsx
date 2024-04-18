@@ -88,7 +88,7 @@ const SelectPayment = () => {
                 <Card className="flex flex-col gap-1 w-1/2 rounded-3xl border-2 active:border-orange-400 focus-within:border-orange-400">
                   <CardContent className="p-5">
                     <p className="font-semibold text-3xl">{data?.slot}</p>
-                    <p className="font-normal text-lg">{data?.floor} Floor</p>
+                    <p className="font-normal text-lg">Floor {data?.floor}</p>
                   </CardContent>
                 </Card>
               </div>

@@ -30,7 +30,7 @@ const ParkingHistory = () => {
             Parking History
           </h2>
           {data.map((reservation) => {
-            if (reservation.payment_status !== "success") {
+            if (reservation.payment_status === "success") {
               return (
                 <HistoryLocation
                   key={reservation.reservation_id}

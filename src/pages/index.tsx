@@ -53,9 +53,7 @@ const Homepage = () => {
       const result = await getReservation();
       const lastReservation = result.data[0];
       setLastReservation(lastReservation);
-    } catch (error) {
-      toast((error as Error).message.toString());
-    }
+    } catch (error) {}
   }
 
   function handleLogout() {

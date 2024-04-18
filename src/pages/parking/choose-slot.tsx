@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/select";
 import { ParkingSlot } from "@/utils/apis/slot/type";
 import { Label } from "@/components/ui/label";
+import { formatOrdinals } from "@/utils/formatter";
 
 const ChooseSlot = () => {
   const params = useParams();
@@ -118,7 +119,7 @@ const ChooseSlot = () => {
 
     if (!selectedValues.floor) {
       return availableFloors.map((floor) => ({
-        label: `${floor} Floor`,
+        label: `${formatOrdinals(floor)} Floor`,
         value: String(floor),
       }));
     }
@@ -128,7 +129,7 @@ const ChooseSlot = () => {
     );
 
     const formatData = filteredByFloor.map((slot) => ({
-      label: `${slot.Slot} Slot`,
+      label: `${formatOrdinals(slot.Slot)} Slot`,
       value: slot.ID,
     }));
 
@@ -208,7 +209,7 @@ const ChooseSlot = () => {
                     {Array.from({ length: floors }, (_, i) => i + 1).map(
                       (number) => (
                         <SelectItem value={String(number)} key={number}>
-                          {number} Floor
+                          {formatOrdinals(number)} Floor
                         </SelectItem>
                       )
                     )}
@@ -228,7 +229,8 @@ const ChooseSlot = () => {
                 <CardContent className="py-2">
                   <p className="font-light text-md leading-none">Picking</p>
                   <p className="font-semibold text-lg">
-                    {selectedValues.floor} Floor | {selectedValues.slot}
+                    {formatOrdinals(Number(selectedValues.floor))} Floor |{" "}
+                    {selectedValues.slot}
                   </p>
                 </CardContent>
               </Card>
