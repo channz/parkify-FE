@@ -1,30 +1,36 @@
-# React + TypeScript + Vite
+<p align="center" width="100%">
+    <img width="33%" src="public/logo-parkify.png" alt="logo-parkify">
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📄 About the Project
 
-Currently, two official plugins are available:
+A website that is used to make parking reservations in an area online. Users will get a QR code every time they make a reservation which can be used to enter and exit a parking area.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Technology Stack
 
-## Expanding the ESLint configuration
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
+![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 💎 Features
 
-- Configure the top-level `parserOptions` property like this:
+### 👤 Operator
+- Create Account
+- Login Account
+- Create a Parking Place
+- Create a Parking Slot
+- Edit Account, Parking Place and Parking Slot
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### 👥 User
+- Create Account
+- Login Account
+- Make a Reservation
+- Simulation Payment with Midtrans
+- Edit Account
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 🔗 Deployment
+
+[parkify-fe.vercel.app](parkify-fe.vercel.app)
