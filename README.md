@@ -4,7 +4,7 @@
 
 ## 📄 About the Project
 
-A website that is used to make parking reservations in an area online. Users will get a QR code every time they make a reservation which can be used to enter and exit a parking area.
+Parkify is a seamless parking reservation website where users can easily book parking spots, receive a QR Code for entry and exit after payment, and manage their reservations. Featuring distinct logins for both Users and Operators, Parkify ensures a smooth experience for drivers and efficient management for parking lot operators. Payment simulations are securely handled via Midtrans.
 
 ## 🚀 Technology Stack
 
